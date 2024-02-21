@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router();
-const view_booking = require('../controllers/admin/view-booking')
+const viewBooking = require('../controllers/admin/viewBooking')
 
 // mapping with controllers
-router.post('/users/view-booking',view_booking)
+router.post('/users/view-booking',viewBooking)
 
 
 module.exports = router;
