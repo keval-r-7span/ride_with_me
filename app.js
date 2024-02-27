@@ -7,6 +7,9 @@ const adminRoute = require('./src/routes/adminRoute')
 const app = express();
 const PORT = process.env.PORT || 3050; // Set port
 
+//middlware use
+app.use(express.json())
+
 // Define routes
 app.use('/api/v1',adminRoute)
 
