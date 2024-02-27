@@ -16,7 +16,7 @@ const View_BookingController = async (req, res) => {
       data: response,
     });
   } catch (err) {
-    res.status(404).send("something wrong in view_booking " + err);
+    res.status(404).send("something wrong in view_booking... " + err);
   }
 };
 
