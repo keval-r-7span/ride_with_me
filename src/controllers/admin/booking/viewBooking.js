@@ -8,7 +8,7 @@ const View_BookingController = async (req, res) => {
       res.status(200).json({
         success: false,
         data: response,
-        message: "Not any booking found..",
+        message: "not any booking found..",
       });
     }
     res.status(200).json({
