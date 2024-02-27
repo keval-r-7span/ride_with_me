@@ -5,11 +5,10 @@ const adminRoute = require('./src/routes/adminRoute')
 
 // Create an instance of Express
 const app = express();
-const PORT = process.env.PORT || 3000; // Set port
+const PORT = process.env.PORT || 3050; // Set port
 
 // Define routes
 app.use('/api/v1',adminRoute)
-
 
 // Connect to MongoDB Atlas
 connectDB();
