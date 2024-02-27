@@ -12,7 +12,7 @@ const createCustomer = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false, 
-            message: "Failed",
+            message: "Something went wrong in CreateCustomer "+error,
         })
     }
 }
