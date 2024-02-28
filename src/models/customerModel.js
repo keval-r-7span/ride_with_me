@@ -8,12 +8,12 @@ const customerSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     phoneNumber: {
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     password: {
         type: String,
@@ -23,6 +23,9 @@ const customerSchema = new mongoose.Schema({
         type: String,
         enum: ["admin", "driver", "user"],
         default: "user"
+    },
+    token: {
+        type: String,
     }
 
     // Other fields as needed, such as address, date of birth, etc.
