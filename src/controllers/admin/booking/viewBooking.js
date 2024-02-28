@@ -21,7 +21,6 @@ const View_BookingController = async (req, res) => {
 };
 
 //view-Booking by userid
-
 const View_BookingByIdController = async (req, res) => {
     try {
       const response = await BookingSchema.findById(req.params.id);
