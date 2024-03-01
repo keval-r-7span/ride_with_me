@@ -1,7 +1,8 @@
 // Import required modules
 const express = require("express");
 const connectDB = require("./src/configs/dbConnection");
-const adminRoute = require('./src/routes/adminRoute')
+const customerRoute = require('./src/routes/customerRoute')
+
 
 // Create an instance of Express
 const app = express();
@@ -11,7 +12,7 @@ const PORT = process.env.PORT || 3050; // Set port
 app.use(express.json())
 
 // Define routes
-app.use('/api/v1',adminRoute)
+app.use('/api/v1',customerRoute)
 
 // Connect to MongoDB Atlas
 connectDB();
