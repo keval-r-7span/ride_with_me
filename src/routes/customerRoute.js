@@ -6,7 +6,7 @@ const router = express.Router();
 const {getCustomer, getCustomerByID} = require('../controllers/customer/getCustomer')
 
 //create User
-const createCustomer = require('../controllers/customer/createCustomer')
+const {createCustomer, loginCustomer} = require('../controllers/customer/createCustomer')
 
 //update user
 const updateCustomer = require('../controllers/customer/updateCustomer')
@@ -17,16 +17,19 @@ const deleteCustomer = require('../controllers/customer/deleteCustomer')
 
 // mapping with controllers
 /////////////////////////////Create Operation//////////////////////////////////
-router.post('/users/register-customer', createCustomer);
+router.post('/customer/register', createCustomer);
 
 /////////////////////READ OPERATIONS///////////////////////////
-router.get('/users/view-customer', getCustomer);
-router.get('/users/view-customer/:id', getCustomerByID);
+router.get('/customer/view', getCustomer);
+router.get('/customer/view/:id', getCustomerByID);
 
 ///////////////////////////UPDATE OPERATION////////////////////////////////////
-router.put('/users/update-customer/:id', updateCustomer);
+router.put('/customer/update/:id', updateCustomer);
 
 //////////////////////////DELETE OPERATION/////////////////////////////////
-router.delete('/users/delete-customer/:id', deleteCustomer);
+router.delete('/customer/delete/:id', deleteCustomer);
+
+///////////////////////////////LOGIN////////////////////////////////////
+router.post('/login', loginCustomer)
 
 module.exports = router;

@@ -36,7 +36,8 @@ const createCustomer = async (req, res) => {
         //Creating Payload
         const payload = {
             Name: response.Name,
-            email: response.email
+            email: response.email,
+            Role: response.Role
         }
 
         //Creating JWT token
@@ -65,4 +66,71 @@ const createCustomer = async (req, res) => {
     }
 }
 
-module.exports = createCustomer;
+const loginCustomer = async (req, res) => {
+    try {
+        //Data Fetch 
+        const {email, password} = req.body
+        
+        //validation on email and password if not validated throw error 
+        if(!email || !password){
+            return res.status(500).json({
+                // success: false,
+                message: "Please register"
+            })
+        }
+        //check for registered user
+        let registeredUser = await Customer.findOne({email})
+        if(!registeredUser){
+            return res.json({
+                success: false,
+                message: "Please Register First"
+            })
+        }
+
+        // const payload = {
+        //     name: registeredUser.Name,
+        //     email: registeredUser.email,
+        //     role: registeredUser.Role,
+        //     password: undefined
+        // }
+        
+        //verify password and genereate jwt token
+        if(await bcrypt.compare(password, registeredUser.password)){
+
+            //Login if password match 
+            let token = jwt.verify(registeredUser.token, process.env.JWT_SECRET, {
+                expiresIn: "48h"
+            })
+
+            // registeredUser = registeredUser.toObject()
+            // registeredUser.token = token;
+            // await registeredUser.save()
+
+            const options = {
+                    expires: new  Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                    httpOnly: true
+            }
+
+            return res.cookie("token", token ,options).status(200).json({
+                success: true,
+                data:registeredUser, 
+                message:"sucessfuly logged in"
+            })
+
+        }
+
+    } catch (error) {
+         res.status(500).json({
+            success: false,
+            message: "Error in login " +error
+        })
+    }
+}
+
+
+
+
+
+
+
+module.exports = {createCustomer, loginCustomer};
