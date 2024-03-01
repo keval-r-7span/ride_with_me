@@ -1,9 +1,12 @@
 const Driver = require("../../../models/driverModel");
 const bcrypt = require('bcryptjs');
 
-const signup = async (req, res) => {
+console.log("djh");
+
+const signUp = async (req, res) => {
   try {
     const { name, email, phoneNumber, vehicle, availabilityStatus, currentLocation, password } = req.body;
+    console.log("hy");
 
     const existingDriver = await Driver.findOne({ email });
     if (existingDriver) {
@@ -22,13 +25,14 @@ const signup = async (req, res) => {
       password: hashedPassword
     });
 
+    console.log("hdgy");
     await newDriver.save();
 
     res.status(201).json({ message: 'Driver created successfully', driver: newDriver });
-  } catch (error) {
-    console.error('Error during signup:', error);
-    res.status(500).json({ message: 'Internal server error' });
+  }
+   catch (error) {
+    res.status(500).send('Error in Sign Up' + error);
   }
 };
 
-module.exports = {signup};
+module.exports = signUp;

@@ -2,6 +2,7 @@ const Driver = require("../../../models/driverModel");
 const bcrypt = require('bcryptjs');
 
 const login = async (req, res) => {
+  console.log("hyyy");
   try {
     const { email, password } = req.body;
 

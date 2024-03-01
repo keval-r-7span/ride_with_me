@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const driverSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    // required: true
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    // unique: true
   },
   phoneNumber: {
     type: String,
-    required: true
+    // required: true
   },
   vehicle: {
     type: String,
-    required: true
+    // required: true
   },
   availabilityStatus: {
     type: String,
@@ -34,10 +34,9 @@ const driverSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    // required: true
   }
 });
 
-const Driver = mongoose.model('Driver', driverSchema);
 
-module.exports = Driver;
+module.exports = mongoose.model('Driver', driverSchema);

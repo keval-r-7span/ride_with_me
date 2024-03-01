@@ -4,7 +4,7 @@ const driverRoute = require('./src/routes/driverRoute');
 
 // Create an instance of Express
 const app = express();
-const PORT = process.env.PORT || 3000; // Set port
+const PORT = process.env.PORT || 3001; // Set port
 
 app.use(express.json);
 // Define routes
