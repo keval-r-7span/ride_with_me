@@ -1,12 +1,15 @@
-const Driver = require("../../../models/driverModel");
+const Driver = require("../../models/driverModel");
 const bcrypt = require('bcryptjs');
-
-console.log("djh");
+const { validationResult } = require('express-validator');
 
 const signUp = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { name, email, phoneNumber, vehicle, availabilityStatus, currentLocation, password } = req.body;
-    console.log("hy");
 
     const existingDriver = await Driver.findOne({ email });
     if (existingDriver) {
@@ -25,13 +28,17 @@ const signUp = async (req, res) => {
       password: hashedPassword
     });
 
-    console.log("hdgy");
     await newDriver.save();
 
-    res.status(201).json({ message: 'Driver created successfully', driver: newDriver });
-  }
-   catch (error) {
-    res.status(500).send('Error in Sign Up' + error);
+    const driverResponse = {
+      id: newDriver._id,
+      name: newDriver.name
+    };
+
+    res.status(201).json({ message: 'Driver created successfully', driver: driverResponse });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'error while creating driver id' });
   }
 };
 

@@ -1,11 +1,22 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const  {login}  = require('../controllers/driver/Auth/driverLogIn'); 
-const  signup  = require('../../src/controllers/driver/Auth/driverSignUp');
-// const  {handleBooking}  = require('../controllers/driver/Booking/driverBooking'); 
-router.post('/driverLogIn', login);
-router.post('/driverSignUp', signup);
-// router.post('/driverBooking', handleBooking);
+const { signup } = require("../controllers/driver/driverSignUp");
+
+const { login } = require("../controllers/driver/driverLogIn");
+
+const { deleteDriver } = require("../controllers/driver/driverDelete");
+
+const { updateAvailability } = require("../controllers/driver/driverAvailability");
+
+const { verifyJWT } = require('../middleware/authMiddleware');
+
+router.post("../controllers/driver/driverSignUp.js", signup);
+
+router.post("../controllers/driver/driverLogIn.js", login);
+
+router.put("/:id/availability", verifyJWT, updateAvailability);
+
+router.delete("/:id", verifyJWT, deleteDriver);
 
 module.exports = router;
