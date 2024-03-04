@@ -5,13 +5,13 @@ const deleteCustomer = async (req, res) => {
         const response = await Customer.findByIdAndDelete(req.params.id)
         return res.status(200).json({
             success: true,
-            message: "User deleted successfully!",
-            data: response
+            data: response,
+            message: "User deleted successfully!"
         })
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Something went wrong in deletebyID "+error
+            message: "Something went wrong in deletebyID "+ error
         })
     }
 }
