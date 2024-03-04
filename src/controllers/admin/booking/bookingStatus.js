@@ -5,7 +5,7 @@ const booking_Complete = async(req,res)=>{
     try {
         const booking = await BookingSchema.findById(id);
         if (!booking) {
-            return res.status(404).json({ message: 'Booking not found' });
+            return res.status(404).json({sucess:false, message: 'Booking not found' });
         }
         booking.status = 'completed';
         await booking.save();

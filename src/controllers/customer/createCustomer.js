@@ -9,22 +9,12 @@ const createCustomer = async (req, res) => {
 
     try {
 
-        //get Data 
         const { Name, email, phoneNumber, password, Role } = req.body
-        
-        //Check if user already exist
         const userExist = await Customer.findOne({ email })
-        
-        //Throwing error for userExisting with same email
         if (userExist) {
             throw new Error("User Already exist with same Email: " + { email });
         }
-
-        //Secure password
         let hashedPassword = await bcrypt.hash(password, 10);
-
-
-        //create User 
         const response = await Customer.create({
             Name,
             email: email.toLowerCase(),
@@ -33,7 +23,6 @@ const createCustomer = async (req, res) => {
             Role
         })
 
-        //Creating Payload
         const payload = {
             Name: response.Name,
             email: response.email,
