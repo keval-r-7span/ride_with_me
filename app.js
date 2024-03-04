@@ -4,11 +4,11 @@ const driverRoute = require('./src/routes/driverRoute');
 
 // Create an instance of Express
 const app = express();
-const PORT = process.env.PORT || 3001; // Set port
+const PORT = process.env.PORT || 3000; // Set port
 
-app.use(express.json);
+app.use(express.json());
 // Define routes
-app.use('/api/v1',driverRoute);
+app.use('/api/v1',driverRoute); 
 
 
 // Connect to MongoDB Atlas
@@ -17,3 +17,5 @@ connectDB();
 app.listen(PORT, () => {
   console.log(`🚀 Server is running.. on http://localhost:${PORT}`);
 });
+
+

@@ -11,12 +11,14 @@ const signUp = async (req, res) => {
 
     const { name, email, phoneNumber, vehicle, availabilityStatus, currentLocation, password } = req.body;
 
-    const existingDriver = await Driver.findOne({ email });
+    const existingDriver = await Driver.findOne({ phoneNumber });
     if (existingDriver) {
-      return res.status(400).json({ message: 'Driver already exists with this email' });
+      return res.status(400).json({ message: 'Driver already exists with this phone number' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, process.env.SALT_ROUNDS || 10);
+    // const hashedPassword = await bcrypt.hash(password, process.env.SALT_ROUNDS || 10);
+    const saltRounds = 10; // Adjust this value as needed
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newDriver = new Driver({
       name,
@@ -38,7 +40,7 @@ const signUp = async (req, res) => {
     res.status(201).json({ message: 'Driver created successfully', driver: driverResponse });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'error while creating driver id' });
+    res.status(500).json({ message: 'driver name , phone number , vehicle and password are required' });
   }
 };
 

@@ -8,9 +8,9 @@ const updateAvailability = require("../controllers/driver/driverAvailability");
 const verifyJWT = require('../middleware/authMiddleware');
 
 
-router.post("../controllers/driver/driverSignUp.js", signup);
-router.post("../controllers/driver/driverLogIn.js", login);
-router.put("/:id/availability", verifyJWT, updateAvailability);
-router.delete("/:id", verifyJWT, deleteDriver);
+router.post('/driver/signup', signup);
+router.post('/driver/login', login);
+router.put('/driver/availability/:id', verifyJWT, updateAvailability);
+router.delete('/driver/delete/:id', verifyJWT, deleteDriver);
 
 module.exports = router;

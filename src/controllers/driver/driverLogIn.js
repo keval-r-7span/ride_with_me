@@ -4,16 +4,16 @@ const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { phoneNumber, password } = req.body;
 
-    const driver = await Driver.findOne({ email });
+    const driver = await Driver.findOne({ phoneNumber });
     if (!driver) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Invalid phoneNumber or password' });
     }
 
     const isMatch = await bcrypt.compare(password, driver.password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Invalid phone number or password' });
     }
 
     // Generate JWT (implement error handling for JWT generation)
