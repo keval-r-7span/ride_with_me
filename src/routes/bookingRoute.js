@@ -12,8 +12,8 @@ const {
 
 router.get("/booking", viewBooking);
 router.get("/booking/:id", viewBookingById);
-router.delete("/booking/:id/cancel", createBooking);
-router.post("/booking/create",cancelBooking)
+router.delete("/booking/:id/cancel", cancelBooking);
+router.post("/booking/create",createBooking)
 router.post("/booking/:id/completed",changeRideStatus)
 
 
