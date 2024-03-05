@@ -8,19 +8,20 @@ const driverSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    // required: true,
-    // unique: true
+    required: true,
+    unique: true
   },
   phoneNumber: {
     type: String,
     required: true,
-    // unique: true
+    unique: true
   },
   vehicle: {
     type: String,
     required: true
   },
   vehicleDetails: {
+    id : String,
     model: { type: String },
     year: { type: Number },
     licensePlate: { type: String }
@@ -30,18 +31,14 @@ const driverSchema = new mongoose.Schema({
     enum: ['available', 'unavailable'],
     default: 'unavailable'
   },
-  currentLocation: {
-    type: {
-      type: String,
-      enum: ['Point']
-    },
-    coordinates: [
-      { type: Number }
-    ]
-  },
   password: {
     type: String,
     required: true
+  },
+  Role:{
+    type: String,
+    enum: ["admin", "driver", "user"],
+    default: "driver"
   }
 });
 
