@@ -7,7 +7,7 @@ const bookingSchema = new mongoose.Schema(
       ref: "Customer",
       required: true,
     },
-    driver: {
+    driverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Driver",
     },
