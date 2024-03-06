@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const CustomerSchema = new mongoose.Schema({
     name: {
-const customerSchema = new mongoose.Schema({
-    name: {
         type: String,
         required: true
     },
@@ -21,7 +19,6 @@ const customerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role:{
     role:{
         type: String,
         enum: ["admin", "driver", "user"],

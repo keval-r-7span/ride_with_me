@@ -8,8 +8,7 @@ const {
   cancelBooking,
   changeRideStatus } = require("../controllers/bookingController")
 
-
-
+  
 router.get("/booking", viewBooking);
 router.get("/booking/:id", viewBookingById);
 router.delete("/booking/:id/cancel", cancelBooking);
