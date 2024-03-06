@@ -26,7 +26,7 @@ const driverSchema = new mongoose.Schema({
     year: { type: Number },
     licensePlate: { type: String }
   },
-  availabilityStatus: {
+  updateAvailability: {
     type: String,
     enum: ['available', 'unavailable'],
     default: 'unavailable'

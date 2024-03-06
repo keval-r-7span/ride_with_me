@@ -1,6 +1,5 @@
 const  mongoose  = require('mongoose');
-require('dotenv').config()
-
+const {DB_URL} = require('../helper/constant')
 // Connect to MongoDB Atlas
 const connectDB = async () => {
     try {
