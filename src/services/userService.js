@@ -1,3 +1,4 @@
+const { TrustProductsEvaluationsContextImpl } = require('twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEvaluations');
 const Customer = require('../models/customerModel')
 
 
@@ -25,9 +26,9 @@ exports.deleteCustomer = async(query)=>{
     }
 }
 
-exports.updateCustomer = async(id,query, option)=>{
+exports.updateCustomer = async(id,query)=>{
     try {
-        return await Customer.findByIdAndUpdate(id, query, option);
+        return await Customer.findByIdAndUpdate(id, query,{new:true});
     } catch (error) {
         throw error
     }
