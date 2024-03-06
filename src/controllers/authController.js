@@ -26,7 +26,7 @@ const registerCustomer = async (req, res) => {
             role: response.role
         }
         //Creating JWT token
-        const token = jwt.sign(payload,process.env.JWT_SECRET,{
+        const token = jwt.sign(payload,JWT.SECRET,{
             expiresIn: JWT.EXPIRES
         })
         response.token = token; //assigning a token to new user in response
@@ -63,22 +63,12 @@ const loginCustomer = async (req, res) => {
                 success: false,
                 message: "Please Register First"
             })
-        }
-        // const payload = {
-        //     name: registeredUser.name,
-        //     email: registeredUser.email,
-        //     role: registeredUser.role,
-        //     password: undefined
-        // }      
+        }    
         //verify password and genereate jwt token
         if(await bcrypt.compare(password, registeredUser.password)){
-            //Login if password match 
-            let token = jwt.verify(registeredUser.token, JWT.SECRET, {
+            const token = jwt.verify(registeredUser.token, JWT.SECRET, {
                 expiresIn: JWT.EXPIRES
             })
-            // registeredUser = registeredUser.toObject()
-            // registeredUser.token = token;
-            // await registeredUser.save()
             const options = {
                     expires: new  Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                     httpOnly: true
