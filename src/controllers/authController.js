@@ -1,62 +1,41 @@
-const Customer = require('../../models/customerModel.js')
+const customerService = require('../services/userService')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const dotenv = require("dotenv")
-dotenv.config()
+const {JWT} = require('../helper/constants')
 
-
-const createCustomer = async (req, res) => {
-
+const registerCustomer = async (req, res) => {
     try {
-
-        //get Data 
-        const { Name, email, phoneNumber, password, Role } = req.body
-        
-        //Check if user already exist
-        const userExist = await Customer.findOne({ email })
-        
-        //Throwing error for userExisting with same email
-        if (userExist) {
+        const { name, email, phoneNumber, password, role } = req.body //getData
+        const userExist = await customerService.findCustomer({ email }) //Check if user already exist
+        if (userExist) //Throwing error for userExisting with same email
+        {
             throw new Error("User Already exist with same Email: " + { email });
         }
-
-        //Secure password
-        let hashedPassword = await bcrypt.hash(password, 10);
-
-
-        //create User 
-        const response = await Customer.create({
-            Name,
+        let hashedPassword = await bcrypt.hash(password, 10); //Secure password 
+        //create User
+        const response = await customerService.registerUser({
+            name,
             email: email.toLowerCase(),
             phoneNumber,
             password: hashedPassword,
-            Role
+            role
         })
-
-        //Creating Payload
         const payload = {
-            Name: response.Name,
+            name: response.name,
             email: response.email,
-            Role: response.Role
+            role: response.role
         }
-
         //Creating JWT token
         const token = jwt.sign(payload,process.env.JWT_SECRET,{
-            expiresIn: "168h"
+            expiresIn: JWT.EXPIRES
         })
-
-        //assigning a token to new user in response
-        response.token = token;
+        response.token = token; //assigning a token to new user in response
         await response.save();
-
-
         return res.status(200).json({
             success: true,
             message: "User created successfully",
             data: response
         })
-        
-
     }
     catch (error) {
         return res.status(500).json({
@@ -69,56 +48,47 @@ const createCustomer = async (req, res) => {
 const loginCustomer = async (req, res) => {
     try {
         //Data Fetch 
-        const {email, password} = req.body
-        
+        const {phoneNumber, password} = req.body
         //validation on email and password if not validated throw error 
-        if(!email || !password){
+        if(!phoneNumber || !password){
             return res.status(500).json({
-                // success: false,
-                message: "Please register"
+                success: false,
+                message: "Please enter proper info! "
             })
         }
         //check for registered user
-        let registeredUser = await Customer.findOne({email})
+        let registeredUser = await customerService.findCustomer({phoneNumber})
         if(!registeredUser){
             return res.json({
                 success: false,
                 message: "Please Register First"
             })
         }
-
         // const payload = {
-        //     name: registeredUser.Name,
+        //     name: registeredUser.name,
         //     email: registeredUser.email,
-        //     role: registeredUser.Role,
+        //     role: registeredUser.role,
         //     password: undefined
-        // }
-        
+        // }      
         //verify password and genereate jwt token
         if(await bcrypt.compare(password, registeredUser.password)){
-
             //Login if password match 
-            let token = jwt.verify(registeredUser.token, process.env.JWT_SECRET, {
-                expiresIn: "48h"
+            let token = jwt.verify(registeredUser.token, JWT.SECRET, {
+                expiresIn: JWT.EXPIRES
             })
-
             // registeredUser = registeredUser.toObject()
             // registeredUser.token = token;
             // await registeredUser.save()
-
             const options = {
                     expires: new  Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                     httpOnly: true
             }
-
             return res.cookie("token", token ,options).status(200).json({
                 success: true,
                 data:registeredUser, 
                 message:"sucessfuly logged in"
             })
-
         }
-
     } catch (error) {
          res.status(500).json({
             success: false,
@@ -127,10 +97,7 @@ const loginCustomer = async (req, res) => {
     }
 }
 
-
-
-
-
-
-
-module.exports = {createCustomer, loginCustomer};
+module.exports = {
+    registerCustomer,
+    loginCustomer
+}
