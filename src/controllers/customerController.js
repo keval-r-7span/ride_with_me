@@ -1,4 +1,4 @@
-const customerService = require('../service/userService')
+const customerService = require('../services/userService')
 
 
 //View All Customer
