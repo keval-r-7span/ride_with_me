@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Customer",
-      required: true,
+      required: false,
     },
     driverId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -42,16 +42,12 @@ const bookingSchema = new mongoose.Schema(
     rating: {
       type: Number,
     },
-    comments:{
-        type:String,
-        defualt:"safe journey"
-    },
-    created_at: {
-      type: Date,
-      default: Date.now(),
+    comments: {
+      type: String,
+      defualt: "safe journey",
     },
   },
-  { timestamps: true }
+  { timestamps: true}
 );
 
 const Booking = mongoose.model("Booking", bookingSchema);

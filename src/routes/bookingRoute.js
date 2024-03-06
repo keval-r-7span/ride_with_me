@@ -6,15 +6,17 @@ const {
   viewBookingById,
   createBooking,
   cancelBooking,
-  changeRideStatus } = require("../controllers/bookingController")
+  changeRideStatus, 
+  updateBooking} = require("../controllers/bookingController")
 
 
 
 router.get("/booking", viewBooking);
 router.get("/booking/:id", viewBookingById);
-router.delete("/booking/:id/cancel", cancelBooking);
 router.post("/booking/create",createBooking)
 router.post("/booking/:id/completed",changeRideStatus)
+router.put("/booking/:id/update",updateBooking)
+router.delete("/booking/:id/cancel", cancelBooking);
 
 
 module.exports = router;

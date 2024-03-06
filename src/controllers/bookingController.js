@@ -20,7 +20,7 @@ const viewBooking = async (req, res) => {
     }
   };
 
-  const viewBookingById = async (req, res) => {
+const viewBookingById = async (req, res) => {
     try {
       const Booking = await booking.view_booking(req.params.id)
       if (!Booking) {
@@ -39,7 +39,7 @@ const viewBooking = async (req, res) => {
     }
   };
 
-  const createBooking = async(req,res)=>{
+const createBooking = async(req,res)=>{
     try {
         const response = await booking.create_booking(req.body);
         await response.save();
@@ -56,6 +56,24 @@ const viewBooking = async (req, res) => {
     }
 }
 
+const updateBooking = async(req,res)=>{
+    try{
+      const response = await booking.update_booking(req.params.id,{
+        $set:req.body},{new:true}
+      )
+      return res.status(200).json({
+          sucess:true,
+          data:response,
+          message:"booking updated.."
+      })
+    }catch(error){
+      return res.status(500).json({
+        sucess:false,
+        message:"Error in update_booking "+ error
+    })
+    }
+}
+
 const cancelBooking = async (req, res) => {
     try {
       const response = await booking.cancel_booking(req.params.id);
@@ -66,7 +84,7 @@ const cancelBooking = async (req, res) => {
           message: "no booking found this user..",
         });
       }
-      res.status(200).json({
+      res.status(204).json({
         success: true,
         data: response,
         message:"Your booking is cancel sucessfully.."
@@ -86,8 +104,8 @@ const cancelBooking = async (req, res) => {
         ridebooking.status = 'completed';
         await ridebooking.save();
         res.json({sucess:true,
-                status:ridebooking.status,
-               message: 'Booking marked as completed' 
+                 status:ridebooking.status,
+                 message: 'Booking marked as completed' 
             });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -98,5 +116,6 @@ const cancelBooking = async (req, res) => {
     viewBookingById,
     createBooking,
     cancelBooking,
-    changeRideStatus
+    changeRideStatus,
+    updateBooking
   }
