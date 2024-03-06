@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.Schema({
-    Name: {
+    name: {
         type: String,
         required: true
     },
@@ -11,7 +11,7 @@ const customerSchema = new mongoose.Schema({
         // unique: true
     },
     phoneNumber: {
-        type: String,
+        type: Number,
         required: true,
         // unique: true
     },
@@ -19,15 +19,14 @@ const customerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Role:{
+    role:{
         type: String,
         enum: ["admin", "driver", "user"],
         default: "user"
     },
     token: {
         type: String,
-    }
-
+    },
     // Other fields as needed, such as address, date of birth, etc.
 }, { timestamps: true });
 

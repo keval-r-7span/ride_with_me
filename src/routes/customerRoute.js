@@ -1,35 +1,25 @@
 //App
 const express = require('express')
 const router = express.Router();
-
-//Read Whole customer and read by id customer
-const {getCustomer, getCustomerByID} = require('../controllers/customer/getCustomer')
-
-//create User
-const {createCustomer, loginCustomer} = require('../controllers/customer/createCustomer')
-
-//update user
-const updateCustomer = require('../controllers/customer/updateCustomer')
-
-//delete user
-const deleteCustomer = require('../controllers/customer/deleteCustomer')
-
+const { 
+       deleteCustomer, 
+       updateCustomer, 
+       getCustomer, 
+       getCustomerByID} = require('../controllers/customerController')
+const {
+       registerCustomer,
+       loginCustomer} = require('../controllers/authController')
+const {sendOTP, 
+       verifyOtp} = require('../controllers/otpAuth')
 
 // mapping with controllers
-/////////////////////////////Create Operation//////////////////////////////////
-router.post('/customer/register', createCustomer);
-
-/////////////////////READ OPERATIONS///////////////////////////
-router.get('/customer/view', getCustomer);
-router.get('/customer/view/:id', getCustomerByID);
-
-///////////////////////////UPDATE OPERATION////////////////////////////////////
-router.put('/customer/update/:id', updateCustomer);
-
-//////////////////////////DELETE OPERATION/////////////////////////////////
-router.delete('/customer/delete/:id', deleteCustomer);
-
-///////////////////////////////LOGIN////////////////////////////////////
-router.post('/login', loginCustomer)
+router.post('/user/register', registerCustomer);
+router.get('/user/view', getCustomer);
+router.get('/user/view/:id', getCustomerByID);
+router.put('/user/update/:id', updateCustomer);
+router.delete('/user/delete/:id', deleteCustomer);
+router.post('/user/login', loginCustomer)
+router.post('/user/send-otp', sendOTP)
+router.post('/user/verify-otp', verifyOtp)
 
 module.exports = router;
