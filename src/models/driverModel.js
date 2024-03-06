@@ -42,14 +42,4 @@ const driverSchema = new mongoose.Schema({
   }
 });
 
-// // Hash password before saving driver
-// driverSchema.pre('save', async function (next) {
-//   if (this.isNew || this.isModified('password')) {
-//     const saltRounds = 10;
-//     const hashedPassword = await bcrypt.hash(this.password, saltRounds);
-//     this.password = hashedPassword;
-//   }
-//   next(); // Proceed with saving the driver
-// });
-
 module.exports = mongoose.model('Driver', driverSchema);
