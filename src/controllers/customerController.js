@@ -1,6 +1,5 @@
 const customerService = require('../services/userService')
 
-
 //View All Customer
 const getCustomer = async (req, res) => {
     try {
@@ -38,7 +37,7 @@ const getCustomerByID = async (req, res) => {
 const deleteCustomer = async (req, res) => {
     try {
         const response = await customerService.deleteCustomer(req.params.id)
-        return res.status(200).json({
+        return res.status(204).json({
             success: true,
             data: response,
             message: "User deleted successfully!"
@@ -58,7 +57,6 @@ const updateCustomer = async (req, res) => {
         const response = await customerService.updateCustomer(
             {_id: id}, 
             {name, email, phoneNumber, role},
-            {new:true }
         )
         return res.status(200).json({
             success: true,

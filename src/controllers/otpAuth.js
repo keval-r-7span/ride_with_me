@@ -1,6 +1,5 @@
 const {TWILIO} = require('../helper/constants'); 
 const client = require('twilio')(TWILIO.ACCOUNT_SID,TWILIO.AUTH_TOKEN)
-const customerService = require('../services/userService')
 
 const sendOTP = async(req, res, next)=>{
     const {countryCode, phoneNumber} = req.body;
