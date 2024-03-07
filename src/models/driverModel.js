@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); 
 
 const driverSchema = new mongoose.Schema({
   name: {
@@ -16,17 +15,15 @@ const driverSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  vehicle: {
-    type: String,
-    required: true
-  },
   vehicleDetails: {
     id : String,
+    type: String,
     model: { type: String },
     year: { type: Number },
-    licensePlate: { type: String }
+    licensePlate: { type: String },
+    required: true
   },
-  updateAvailability: {
+  availability: {
     type: String,
     enum: ['available', 'unavailable'],
     default: 'unavailable'
@@ -35,7 +32,7 @@ const driverSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Role:{
+  role:{
     type: String,
     enum: ["admin", "driver", "user"],
     default: "driver"

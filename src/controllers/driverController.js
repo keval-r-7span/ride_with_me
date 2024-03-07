@@ -1,35 +1,45 @@
-const DriverService = require('../services/driverService');
+const driverService = require('../services/driverService');
 
-const updateAvailability = async (req, res) => {
+const updateDriver = async (req, res) => {
   try {
-    const driver = await DriverService.updateAvailability(req.params.id, req.body.availability);
-    if (!driver) {
-      return res.status(404).json({ message: 'Driver not found' });
-    }
-    res.status(200).json({ message: 'Availability updated successfully', driver });
+      const { id } = req.params;
+      const { name, email, phoneNumber, vehicleDetails, updateAvailability, password, role} = req.body
+      const response = await driverService.updateDriver(
+          {_id: id},
+          req.body ,
+          {new:true }
+      )
+      return res.status(200).json({
+          success: true,
+          data: response,
+          message: "driver details updated Successfully"
+      })      
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error while updating availability of driver' });
+      return res.status(500).json({
+          success: false,
+          message: "Cannot find ID to update : "+error
+      })
   }
 };
 
 const deleteDriver = async (req, res) => {
   try {
-    JWT(req, res, async () => { 
-      const deletedDriver = await DriverService.deleteDriver(req.params.id);
-      if (!deletedDriver) {
-        return res.status(404).json({ message: 'Driver not found' });
-      }
-      res.status(200).json({ message: 'Driver deleted successfully' });
-    });
+      const {id} = req.params
+      const response = await driverService.deleteDriver(id);
+      return res.status(200).json({
+        success: true,
+        data: response,
+        message: "Driver deleted successfully!"
+      })
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error while deleting driver' });
+      return res.status(500).json({
+          success: false,
+          message: "Error while deleting driver "+error
+      })
   }
 };
 
-
 module.exports = {
-  updateAvailability,
+  updateDriver,
   deleteDriver
 };
