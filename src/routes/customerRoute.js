@@ -18,6 +18,8 @@ const validateRequest = require("../validation/userValidation");
 const calcDistance = require("../helper/distance");
 const { verifyToken } = require("../middleware/authMiddleware");
 
+const calcDistance = require('../helper/distance')
+
 // mapping with controllers
 router.post('/register',validateRequest, signUp);
 router.post('/login', login)
@@ -27,5 +29,8 @@ router.put('/update/:id', updateCustomer);
 router.delete('/delete/:id', deleteCustomer);
 router.post('/send-otp', sendOTP)
 router.post('/verify-otp', verifyOtp)
+
+//calc distance 
+router.get('/distance', calcDistance)
 
 module.exports = router;
