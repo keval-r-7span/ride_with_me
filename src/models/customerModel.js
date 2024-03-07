@@ -27,7 +27,6 @@ const customerSchema = new mongoose.Schema({
     token: {
         type: String,
     },
-    // Other fields as needed, such as address, date of birth, etc.
 }, { timestamps: true });
 
 const Customer = mongoose.model('Customer', customerSchema);

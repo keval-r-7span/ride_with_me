@@ -17,4 +17,8 @@ const TWILIO = {
     SERVICE_SID:process.env.TWILIO_SERVICE_SID 
 }
 
-module.exports = {PORT,JWT,DB_DATA,TWILIO}
+const DISTANCE = {
+    DISTANCE_MATRIX: process.env.DISTANCE_MATRIX_KEY
+}
+
+module.exports = {PORT,JWT,DB_DATA,TWILIO, DISTANCE}
