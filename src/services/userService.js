@@ -1,5 +1,4 @@
-const { TrustProductsEvaluationsContextImpl } = require('twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEvaluations');
-const Customer = require('../models/customerModel')
+const {Customer} = require('../models/customerModel')
 
 
 exports.viewCustomer = async()=>{
