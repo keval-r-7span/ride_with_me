@@ -24,3 +24,8 @@ const MAIL={
 }
 
 module.exports = {PORT,JWT,DB_DATA,TWILIO,MAIL}
+const DISTANCE = {
+    DISTANCE_MATRIX: process.env.DISTANCE_MATRIX_KEY
+}
+
+module.exports = {PORT,JWT,DB_DATA,TWILIO, DISTANCE}
