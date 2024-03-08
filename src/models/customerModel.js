@@ -17,6 +17,8 @@ const CustomerSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    // location
+    //
     role: {
       type: String,
       enum: ["admin", "driver", "user"],
@@ -35,7 +37,7 @@ const Customer = mongoose.model("Customer", CustomerSchema);
 const customerJoiSchema = Joi.object({
   name: Joi.string().min(3).max(15).required(),
   email: Joi.string().email().required(),
-  phoneNumber: Joi.number().min(5).max(10).required(),
+  phoneNumber: Joi.number().min(10).max(10).required(),
   password: Joi.string().min(4).max(12).required(),
 });
 

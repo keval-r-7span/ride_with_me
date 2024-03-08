@@ -25,6 +25,6 @@ router.post('/user/send-otp', sendOTP)
 router.post('/user/verify-otp', verifyOtp)
 
 //calc distance 
-router.get('/distance', calcDistance)
+router.get('/maps/distance', calcDistance)
 
 module.exports = router;
