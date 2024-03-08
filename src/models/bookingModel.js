@@ -21,6 +21,7 @@ const bookingSchema = new mongoose.Schema(
     },
     pickupTime: {
       type: Date,
+      defualt:Date.now(),
       required: true,
     },
     dropoffTime: {

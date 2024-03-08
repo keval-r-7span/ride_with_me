@@ -41,7 +41,7 @@ const viewBookingById = async (req, res) => {
 
 const BookingStatus = async (req, res) => {
   try {
-    const status =  req.body.status || req.query.status
+    const status = req.body.status || req.query.status;
     const Booking = await booking.viewBookingFilter({ status });
     res.status(200).json({
       success: true,
@@ -99,23 +99,23 @@ const cancelBooking = async (req, res) => {
     if (!response) {
       return res.status(200).json({
         success: false,
-        data: response,
         message: "no booking found this user..",
       });
     }
-    res.status(204).json({
+    return res.status(200).json({
       success: true,
-      data: response,
       message: "Your booking is cancel sucessfully..",
     });
   } catch (err) {
-    return res.status(404).send("something wrong in cancel_booking... " + err);
+    return res
+      .status(404)
+      .json({ message: "something wrong in cancel_booking... " + err });
   }
 };
 
 const changeRideStatus = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const ridebooking = await booking.rideComplete(id);
     if (!ridebooking) {
       return res
@@ -134,6 +134,26 @@ const changeRideStatus = async (req, res) => {
   }
 };
 
+const paymentStatus = async (req, res) => {
+  try {
+    const ridebooking = await booking.rideComplete(req.params.id);
+    if (!ridebooking) {
+      return res
+        .status(404)
+        .json({ sucess: false, message: "Payment not completed" });
+    }
+    ridebooking.payment_status = "completed";
+    await ridebooking.save();
+    res.json({
+      sucess: true,
+      status: ridebooking.payment_status,
+      message: "payment status marked as completed",
+    });
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   viewBooking,
   viewBookingById,
@@ -142,4 +162,5 @@ module.exports = {
   changeRideStatus,
   updateBooking,
   BookingStatus,
+  paymentStatus,
 };
