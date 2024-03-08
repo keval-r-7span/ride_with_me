@@ -1,7 +1,7 @@
 const customerService = require("../services/userService");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { JWT } = require("../helper/constants");
+const jwtToken = require("../validator/jwtToken");
+const {JWT} = require('../helper/constants')
 
 const signUp = async (req, res) => {
   try {
@@ -10,6 +10,27 @@ const signUp = async (req, res) => {
     console.log(userExist);
     if (userExist) {
       throw new Error("User Already exist with same Email: " + { email });
+    }
+    if (role !== "admin") {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const response = await customerService.registerUser({
+        name,
+        email: email.toLowerCase(),
+        phoneNumber,
+        password: hashedPassword,
+        role,
+      });
+      await response.save();
+      return res.status(200).json({
+        success: true,
+        message: "User created successfully",
+        data: response,
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Enter valid role",
+      });
     }
     if (role !== "admin") {
       const hashedPassword = await bcrypt.hash(password, 10);
