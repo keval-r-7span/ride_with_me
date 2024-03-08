@@ -41,8 +41,8 @@ const viewBookingById = async (req, res) => {
 
 const BookingStatus = async (req, res) => {
   try {
-    const { status } = req.query;
-    const Booking = await booking.viewBookingFilter({status});
+    const status =  req.body.status || req.query.status
+    const Booking = await booking.viewBookingFilter({ status });
     res.status(200).json({
       success: true,
       data: Booking,
