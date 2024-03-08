@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require("joi");
 
 const driverSchema = new mongoose.Schema({
   name: {
@@ -21,7 +22,7 @@ const driverSchema = new mongoose.Schema({
     model: { type: String },
     year: { type: Number },
     licensePlate: { type: String },
-    required: true
+    // required: true
   },
   availability: {
     type: String,
@@ -36,7 +37,23 @@ const driverSchema = new mongoose.Schema({
     type: String,
     enum: ["admin", "driver", "user"],
     default: "driver"
+  },
+  token: {
+    type: String,
   }
 });
 
-module.exports = mongoose.model('Driver', driverSchema);
+const Driver = mongoose.model('Driver', driverSchema);
+
+// joi Schema validation
+const driverJoiSchema = Joi.object({
+  name: Joi.string().min(3).max(15).required(),
+  email: Joi.string().email().required(),
+  phoneNumber: Joi.number().min(5).max(10).required(),
+  password: Joi.string().min(4).max(12).required(),
+});
+
+module.exports = {
+  Driver: Driver,
+  validatedriver:(user)=>driverJoiSchema.validate(user)
+};
