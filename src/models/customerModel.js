@@ -16,6 +16,8 @@ const CustomerSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    // location
+    //
     role: {
       type: String,
       enum: ["admin", "driver", "user"],

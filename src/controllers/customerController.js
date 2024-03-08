@@ -34,22 +34,6 @@ const getCustomerByID = async (req, res) => {
     }
 }
 
-const deleteCustomer = async (req, res) => {
-    try {
-        const response = await customerService.deleteCustomer(req.params.id)
-        return res.status(204).json({
-            success: true,
-            data: response,
-            message: "User deleted successfully!"
-        })
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Something went wrong in deletebyID "+error
-        })
-    }
-}
-
 const updateCustomer = async (req, res) => {
     try {
         const { id } = req.params
@@ -70,6 +54,24 @@ const updateCustomer = async (req, res) => {
         })
     }
 }
+
+const deleteCustomer = async (req, res) => {
+    try {
+        const response = await customerService.deleteCustomer(req.params.id)
+        return res.status(204).json({
+            success: true,
+            data: response,
+            message: "User deleted successfully!"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong in deletebyID "+error
+        })
+    }
+}
+
+
 
 module.exports = {
     deleteCustomer, 
