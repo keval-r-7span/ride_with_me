@@ -1,25 +1,24 @@
-const {Driver} = require("../models/driverModel");
-
+const driverSchema = require("../models/driverModel");
 
 exports.findDriver = async(query)=>{
     try {
-        return await Driver.findOne(query);
+        return await driverSchema.findOne(query);
     } catch (error) {
-        throw error
+        throw error;
     }
-}
+};
 
 exports.registerUser = async(query)=>{
     try {
-        return await Driver.create(query);
+        return await driverSchema.create(query);
     } catch (error) {
-        throw error
+        throw error;
     }
-}
+};
 
  exports.updateDriver = async(id,query, option)=>{
   try {
-      return await Driver.findByIdAndUpdate(id, query, option);
+      return await driverSchema.findByIdAndUpdate(id, query, option);
   } catch (error) {
       throw error;
   }
@@ -27,8 +26,17 @@ exports.registerUser = async(query)=>{
 
 exports.deleteDriver = async(query)=>{
   try {
-      return await Driver.findByIdAndDelete(query);
+      return await driverSchema.findByIdAndDelete(query);
   } catch (error) {
-      throw error
+      throw error;
   }
 };
+
+exports.availableDrivers = async () => {
+    try {
+        return await driverSchema.find({ availability: 'available' }).select('name');
+    } catch (error) {
+        throw error;
+    }
+};
+

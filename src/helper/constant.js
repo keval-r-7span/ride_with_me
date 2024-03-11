@@ -2,13 +2,13 @@ require("dotenv").config();
 
 const PORT = process.env.PORT;
 
-const DB_DATA = {
-	DB_URL: process.env.DB_URL
+const JWT = {
+	SECRET: process.env.JWT_SECRET,
+	EXPIRES: process.env.EXPIRES
 };
 
-const JWT = {
-	SECRET: process.env.SECRET,
-	EXPIRES: process.env.EXPIRES
+const DB_DATA = {
+	DB_URL: process.env.DB_URL
 };
 
 const TWILIO = {
