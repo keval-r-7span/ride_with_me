@@ -7,7 +7,6 @@ exports.generateAccessToken = (user) => {
     email: user.email,
     role: user.role,
   };
-
   const options = { expiresIn: JWT.EXPIRES };
   return jwt.sign(payload, JWT.SECRET, options);
 };

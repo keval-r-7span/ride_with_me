@@ -1,7 +1,7 @@
 const customerService = require("../services/userService");
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
-const {JWT} = require('../helper/constants')
+const { JWT } = require("../helper/constants");
 
 const signUp = async (req, res) => {
   try {
@@ -58,18 +58,17 @@ const login = async (req, res) => {
       const ismatch = bcrypt.compare(password, registeredUser.password);
       if (ismatch) {
         const token = jwtToken.generateAccessToken(registeredUser);
-        registeredUser.token = token
-        res.cookie("token", token, { httpOnly: true}).json({
-            success: true,
-            registeredUser,
-            message:"User Logged in successfully"
-        })
-      }
-      else{
+        registeredUser.token = token;
+        res.cookie("token", token, { httpOnly: true }).json({
+          success: true,
+          registeredUser,
+          message: "User Logged in successfully",
+        });
+      } else {
         return res.json({
-            success: false,
-            message: "invalid user during token assigning"
-        })
+          success: false,
+          message: "invalid user during token assigning",
+        });
       }
     }
   } catch (error) {
