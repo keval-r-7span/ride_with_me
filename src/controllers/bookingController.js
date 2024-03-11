@@ -1,3 +1,4 @@
+const mailForBooking = require("../helper/sendMail");
 const booking = require("../services/bookingService");
 const bookingJoiSchema = require('../validation/bookingValidation')
 
@@ -62,7 +63,8 @@ const createBooking = async (req, res) => {
       return res.status(400).json({sucess:false, message: error.details[0].message });
     }else{
       const response = await booking.createBooking(req.body);
-      await response.save();
+      // await response.save();
+      mailForBooking(response);
       return res.status(200).json({
         sucess: true,
         data: response,

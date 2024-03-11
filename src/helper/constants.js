@@ -17,4 +17,10 @@ const TWILIO = {
     SERVICE_SID:process.env.TWILIO_SERVICE_SID 
 }
 
-module.exports = {PORT,JWT,DB_DATA,TWILIO}
+const MAIL={
+    HOST:process.env.MAIL_HOST,
+    USER:process.env.MAIL_USER,
+    PASS:process.env.MAIL_PASS
+}
+
+module.exports = {PORT,JWT,DB_DATA,TWILIO,MAIL}
