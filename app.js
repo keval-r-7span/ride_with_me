@@ -4,6 +4,9 @@ const indexRoute = require("./src/routes/index");
 const { PORT } = require("./src/helper/constants");
 
 const app = express();
+
+app.use(cookieParser());
+
 app.use(express.json());
 
 // Define routes

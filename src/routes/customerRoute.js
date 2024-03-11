@@ -15,6 +15,11 @@ const validateRequest = require('../validation/userValidation')
 
 const calcDistance = require('../helper/distance')
 
+const {verifyToken, 
+       isAdmin, 
+       isDriver, 
+       isUser} = require('../middleware/authMiddleware')
+
 // mapping with controllers
 router.post('/register',validateRequest, signUp);
 router.post('/login', login)
