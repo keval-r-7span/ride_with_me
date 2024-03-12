@@ -3,11 +3,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const driverJoiSchema = require("../validation/driverValidation");
 const updateDriverJoiSchema = require("../validation/driverValidation");
-const {JWT} = require('../helper/constant');
+const {JWT} = require('../helper/constants');
 
-exports.signUp = async (req, res) => {
+exports.driverSignUp = async (req, res) => {
     try {
-      const { name,email,phoneNumber,vehicleDetails,password,role,token } = req.body;
+      const { name,email,phoneNumber,vehicleDetails,password,role } = req.body;
       const userExist = await driverService.findDriver({ email });
       if (userExist) {
         throw new Error("User Already exist with same Email");
@@ -93,7 +93,7 @@ exports.updateDriver = async (req, res) => {
   try {
       const { id } = req.params;
       const { name, email, phoneNumber, vehicleDetails, availability, password, role} = req.body;
-      const { error, value } = updateDriverJoiSchema.validate(req.body, { allowUnknown: true });
+      const { error, value } = updateDriverJoiSchema.validate(req.body);
 
       if (error) {
         return res.status(400).json({
@@ -119,11 +119,6 @@ exports.updateDriver = async (req, res) => {
       })
   }
 };
-
-
-
-
-
 
 exports.deleteDriver = async (req, res) => {
   try {
