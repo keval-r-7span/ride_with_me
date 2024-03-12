@@ -2,20 +2,15 @@ const express = require("express");
 const connectDB = require("./src/configs/dbConnection");
 const customerRoute = require("./src/routes/customerRoute");
 const bookingRoute = require("./src/routes/bookingRoute");
+const driverRoute = require('./src/routes/driverRoute')
+const { PORT } = require("./src/helper/constants");
 
 const app = express();
 app.use(express.json());
 
-const { PORT } = require("./src/helper/constants");
-
 // Define routes
 app.use("/api/v1", bookingRoute);
 app.use("/api/v1", customerRoute);
-
-// Connect to MongoDB Atlas
-const {PORT} = require('./src/helper/constant')
-
-// Define routes
 app.use('/api/v1',driverRoute); 
 
 // Connect to MongoDB Atlas .
