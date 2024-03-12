@@ -4,7 +4,7 @@ const mailForBooking = async (_doc) => {
   await transporter.sendMail({
     from: "Ride-ME",
     to: "kevalrabadiya27@gmail.com",
-    subject: "Ride-ME✔",
+    subject: "Ride-ME🚕",
     text: "Hello world?",
     html: `
     <p>Dear Customer,</p>

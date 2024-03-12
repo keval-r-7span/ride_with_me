@@ -66,8 +66,8 @@ const createBooking = async (req, res) => {
     }else{
       const response = await booking.createBooking(req.body);
       // send mail
-      // mailForBooking(response);
-      await response.save()
+      mailForBooking(response);
+      // await response.save()
       return res.status(200).json({
         sucess: true,
         data: response,

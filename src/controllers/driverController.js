@@ -59,8 +59,8 @@ exports.login = async (req, res) => {
         message: "Please enter proper info! ",
       });
     }
-    let registeredUser = await driverService.findDriver({ phoneNumber });
 
+    const registeredUser = await driverService.findDriver({ phoneNumber });
     if (!registeredUser) {
       return res.json({
         success: false,
