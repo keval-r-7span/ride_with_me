@@ -5,7 +5,6 @@ const bookingSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Customer",
-      required: true,
     },
     driverId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,15 +12,12 @@ const bookingSchema = new mongoose.Schema(
     },
     pickupLocation: {
       type: String,
-      required: true,
     },
     dropoffLocation: {
       type: String,
-      required: true,
     },
     pickupTime: {
       type: Date,
-      required: true,
     },
     dropoffTime: {
       type: Date,
@@ -29,7 +25,7 @@ const bookingSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "accepted", "ongoing", "completed", "cancelled"],
-      default: "pending",
+      default:"pending"
     },
     fare: {
       type: Number,
@@ -37,23 +33,17 @@ const bookingSchema = new mongoose.Schema(
     payment_status: {
       type: String,
       enum: ["pending", "completed"],
-      default: "pending",
+      default:"pending"
     },
     rating: {
       type: Number,
     },
-    comments:{
-        type:String,
-        defualt:"safe journey"
-    },
-    created_at: {
-      type: Date,
-      default: Date.now(),
+    comments: {
+      type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true}
 );
 
-const Booking = mongoose.model("Booking", bookingSchema);
 
-module.exports = Booking;
+module.exports = mongoose.model("Booking", bookingSchema);;
