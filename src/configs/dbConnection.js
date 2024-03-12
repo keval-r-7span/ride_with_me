@@ -1,8 +1,7 @@
 const  mongoose  = require('mongoose');
-const {DB_DATA} = require('../helper/constants')
+const {DB_DATA} = require('../helper/constant')
 require('dotenv').config()
 
-// Connect to MongoDB Atlas
 const connectDB = async () => {
     try {
         await mongoose.connect(DB_DATA.DB_URL);
@@ -11,5 +10,4 @@ const connectDB = async () => {
         console.error('Error connecting to MongoDB Atlas:', error);
     }
 };
-
 module.exports = connectDB;

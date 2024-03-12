@@ -13,6 +13,12 @@ app.use("/api/v1", bookingRoute);
 app.use("/api/v1", customerRoute);
 
 // Connect to MongoDB Atlas
+const {PORT} = require('./src/helper/constant')
+
+// Define routes
+app.use('/api/v1',driverRoute); 
+
+// Connect to MongoDB Atlas .
 connectDB();
 
 // Start the server
