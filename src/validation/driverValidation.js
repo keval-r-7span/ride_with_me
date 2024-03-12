@@ -15,7 +15,6 @@ const updateDriverJoiSchema = Joi.object({
     phoneNumber: Joi.string().min(10).max(10),
     vehicleDetails : Joi.string(),
     availability: Joi.string().valid('available', 'unavailable'),
-    password: Joi.string().min(3),
     role: Joi.string().valid('driver'),
 }).min(1);
 

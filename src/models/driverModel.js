@@ -9,7 +9,7 @@ const driverSchema = new mongoose.Schema({
     unique: true
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     unique: true
   },
   vehicleDetails: {
