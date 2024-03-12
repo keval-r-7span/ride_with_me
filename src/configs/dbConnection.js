@@ -1,5 +1,5 @@
 const  mongoose  = require('mongoose');
-const {DB_DATA} = require('../helper/constant')
+const {DB_DATA} = require('../helper/constants')
 require('dotenv').config()
 
 const connectDB = async () => {

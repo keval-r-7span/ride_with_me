@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const driverJoiSchema = require("../validation/driverValidation");
 const updateDriverJoiSchema = require("../validation/driverValidation");
-const {JWT} = require('../helper/constant');
+const {JWT} = require('../helper/constants');
 
 exports.signUp = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ exports.signUp = async (req, res) => {
           message: "Enter valid role",
         });
       }
-      const { error, value } =driverJoiSchema.validate(req.body);
+      const { error, value } = driverJoiSchema.validate(req.body);
       if (error) {
           return res.status(400).json({
             sucess:false, 
@@ -84,16 +84,11 @@ exports.login = async (req, res) => {
     }
 };
 
-
-
-
-
-
 exports.updateDriver = async (req, res) => {
   try {
       const { id } = req.params;
-      const { name, email, phoneNumber, vehicleDetails, availability, password, role} = req.body;
-      const { error, value } = updateDriverJoiSchema.validate(req.body, { allowUnknown: true });
+      const { name, email, phoneNumber, vehicleDetails, availability, role} = req.body;
+      const { error, value } = updateDriverJoiSchema.validate(req.body);
 
       if (error) {
         return res.status(400).json({
@@ -120,11 +115,6 @@ exports.updateDriver = async (req, res) => {
   }
 };
 
-
-
-
-
-
 exports.deleteDriver = async (req, res) => {
   try {
       const {id} = req.params
@@ -142,12 +132,12 @@ exports.deleteDriver = async (req, res) => {
   }
 };
 
-exports.availableDrivers = async (req, res, next) => {
+exports.availableDrivers = async (req, res) => {
     try {
-        const availableDrivers = await driverService.availableDrivers();
+        const availableDrivers = await driverService.availableDrivers({ availability: 'available'});
         res.status(200).json({ 
             success: true,
-            drivers: availableDrivers 
+            drivers: availableDrivers
         });
     } catch (err) {
         console.error(err);

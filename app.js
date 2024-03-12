@@ -5,7 +5,7 @@ const driverRoute = require('./src/routes/driverRoute');
 const app = express();
 app.use(express.json());
 
-const {PORT} = require('./src/helper/constant')
+const {PORT} = require('./src/helper/constants')
 
 // Define routes
 app.use('/api/v1',driverRoute); 
