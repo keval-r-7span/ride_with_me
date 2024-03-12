@@ -39,4 +39,3 @@ exports.availableDrivers = async (query) => {
         throw error;
     }
 };
-

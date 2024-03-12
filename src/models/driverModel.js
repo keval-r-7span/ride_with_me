@@ -17,6 +17,7 @@ const driverSchema = new mongoose.Schema({
     model: { type: String },
     year: { type: Number },
     licensePlate: { type: String },
+    // required: true
   },
   availability: {
     type: String,
