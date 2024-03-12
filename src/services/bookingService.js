@@ -2,7 +2,10 @@ const BookingSchema = require("../models/bookingModel");
 
 exports.viewBookingAll = async () => {
   try {
-    return await BookingSchema.find();
+    return await BookingSchema.find()
+      .sort({ createdAt: -1 })
+      .populate("customer")
+      .exec();
   } catch (error) {
     throw error;
   }
@@ -10,18 +13,22 @@ exports.viewBookingAll = async () => {
 
 exports.viewBooking = async (query) => {
   try {
-    return await BookingSchema.findById(query);
+    return await BookingSchema.findById(query)
+      .sort({ createdAt: -1 })
+      .populate("customer")
+      .exec();
   } catch (error) {
     throw error;
   }
 };
 exports.viewBookingFilter = async (query) => {
   try {
-    return await BookingSchema.find(query);
+    return await BookingSchema.find(query).sort({ createdAt: -1 });
   } catch (error) {
     throw error;
   }
 };
+
 exports.createBooking = async (query) => {
   try {
     return await BookingSchema.create(query);
@@ -30,13 +37,13 @@ exports.createBooking = async (query) => {
   }
 };
 
-exports.updateBooking = async(id,query,option)=>{
+exports.updateBooking = async (id, query, option) => {
   try {
-    return await BookingSchema.findByIdAndUpdate(id,query,option)
+    return await BookingSchema.findByIdAndUpdate(id, query, option);
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 exports.cancelBooking = async (query) => {
   try {
@@ -54,25 +61,25 @@ exports.rideComplete = async (query) => {
   }
 };
 
-exports.getMonthlyRevenue = async()=> {
+exports.getMonthlyRevenue = async () => {
   try {
-      const monthlyRevenue = await BookingSchema.aggregate([
-          {
-              $group: {
-                  _id: { 
-                      year: { $year: '$pickupTime' }, 
-                      month: { $month: '$pickupTime' }
-                  },
-                  totalRevenue: { $sum: '$fare' }
-              }
+    const monthlyRevenue = await BookingSchema.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$pickupTime" },
+            month: { $month: "$pickupTime" },
           },
-          {
-              $sort: { '_id.year': 1, '_id.month': 1 }
-          }
-      ]);
+          totalRevenue: { $sum: "$fare" },
+        },
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 },
+      },
+    ]);
 
-      return monthlyRevenue;
+    return monthlyRevenue;
   } catch (error) {
-      throw error;
+    throw error;
   }
-}
+};

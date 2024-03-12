@@ -18,7 +18,7 @@ router.get("/booking/:id", viewBookingById);
 router.post("/booking/create", createBooking);
 router.post("/booking/:id/completed", changeRideStatus);
 router.put("/booking/update/:id", updateBooking);
-router.post("/booking/payment/:id",paymentStatus)
+router.post("/booking/payment/status/:id",paymentStatus)
 router.delete("/booking/cancel/:id", cancelBooking);
 
 module.exports = router;

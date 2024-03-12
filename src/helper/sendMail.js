@@ -1,7 +1,7 @@
 const transporter = require("../configs/mainTransport");
 
 const mailForBooking = async (_doc) => {
-  const info = await transporter.sendMail({
+  await transporter.sendMail({
     from: "Ride-ME",
     to: "kevalrabadiya27@gmail.com",
     subject: "Ride-ME✔",
