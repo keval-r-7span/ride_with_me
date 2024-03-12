@@ -9,15 +9,14 @@ const driverSchema = new mongoose.Schema({
     unique: true
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     unique: true
   },
   vehicleDetails: {
     type: String,
     model: { type: String },
     year: { type: Number },
-    licensePlate: { type: String },
-    // required: true
+    licensePlate: { type: String }
   },
   availability: {
     type: String,

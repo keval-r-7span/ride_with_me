@@ -2,7 +2,6 @@ const driverService = require('../services/driverService');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const driverJoiSchema = require("../validation/driverValidation");
-const updateDriverJoiSchema = require("../validation/driverValidation");
 const {JWT} = require('../helper/constants');
 
 exports.signUp = async (req, res) => {
@@ -12,13 +11,13 @@ exports.signUp = async (req, res) => {
       if (userExist) {
         throw new Error("User Already exist with same Email");
       }
-      if (role !== "driver") {
+      if (role !== "driver" && role === " ") {
         return res.status(400).json({
           success: false,
           message: "Enter valid role",
         });
       }
-      const { error, value } = driverJoiSchema.validate(req.body);
+      const { error } = driverJoiSchema.validate(req.body);
       if (error) {
           return res.status(400).json({
             sucess:false, 
@@ -32,7 +31,7 @@ exports.signUp = async (req, res) => {
             email: email.toLowerCase(),
             phoneNumber,
             vehicleDetails,
-            password: hashedPassword,
+            password : hashedPassword ,
             role
           });
             await response.save();
@@ -87,8 +86,8 @@ exports.login = async (req, res) => {
 exports.updateDriver = async (req, res) => {
   try {
       const { id } = req.params;
-      const { name, email, phoneNumber, vehicleDetails, availability, role} = req.body;
-      const { error, value } = updateDriverJoiSchema.validate(req.body);
+      const { name, email, vehicleDetails, availability} = req.body;
+      const { error, value } = driverJoiSchema.validate(req.body);
 
       if (error) {
         return res.status(400).json({
