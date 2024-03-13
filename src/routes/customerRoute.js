@@ -11,9 +11,10 @@ const {
        login} = require('../controllers/authController')
 const {sendOTP, 
        verifyOtp} = require('../controllers/otpAuth')
+const validateRequest = require('../validation/userValidation')
 
 // mapping with controllers
-router.post('/user/register', signUp);
+router.post('/user/register',validateRequest, signUp);
 router.post('/user/login', login)
 router.get('/user/view', getCustomer);
 router.get('/user/view/:id', getCustomerByID);

@@ -18,12 +18,6 @@ const signUp = async (req, res) => {
         message: "Enter valid role",
       });
     }
-    const { error, value } = userJoiSchema.validate(req.body);
-    if (error) {
-      return res
-        .status(400)
-        .json({ sucess: false, message: error.details[0].message });
-    } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const response = await customerService.registerUser({
         name,
@@ -38,7 +32,6 @@ const signUp = async (req, res) => {
         data: response,
         message: "User created successfully",
       });
-    }
   } catch (error) {
     return res.status(500).json({
       success: false,

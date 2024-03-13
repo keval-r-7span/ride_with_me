@@ -12,4 +12,12 @@ const bookingJoiSchema = Joi.object({
   comments: Joi.string(),
 });
 
-module.exports = bookingJoiSchema;
+const validateRequest = (req, res, next) => {
+  const { error } = bookingJoiSchema.validate(req.body);
+  if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+};
+
+module.exports = validateRequest;

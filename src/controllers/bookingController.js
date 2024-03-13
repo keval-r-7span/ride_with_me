@@ -60,10 +60,6 @@ const BookingStatus = async (req, res) => {
 
 const createBooking = async (req, res) => {
   try {
-    const {error} = bookingJoiSchema.validate(req.body)
-    if(error){
-      return res.status(400).json({sucess:false, message: error.details[0].message });
-    }else{
       const response = await booking.createBooking(req.body);
       // send mail
       mailForBooking(response);
@@ -73,7 +69,6 @@ const createBooking = async (req, res) => {
         data: response,
         message: "Your Booking is done..",
       });
-    }
   } catch (error) {
     return res.status(500).json({
       sucess: false,
