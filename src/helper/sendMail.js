@@ -1,4 +1,4 @@
-const transporter = require("../configs/mainTransport");
+const transporter = require("../configs/mailTransport");
 
 const mailForBooking = async (_doc) => {
   await transporter.sendMail({
