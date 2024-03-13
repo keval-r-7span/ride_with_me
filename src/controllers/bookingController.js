@@ -1,8 +1,6 @@
 const mailForBooking = require("../helper/sendMail");
 const booking = require("../services/bookingService");
-const bookingJoiSchema = require('../validation/bookingValidation')
-const CustomerSchema = require('../models/customerModel')
-const BookingSchema = require('../models/bookingModel')
+const bookingJoiSchema = require("../validation/bookingValidation");
 
 const viewBooking = async (req, res) => {
   try {
@@ -10,7 +8,6 @@ const viewBooking = async (req, res) => {
     if (!Booking) {
       return res.status(200).json({
         success: false,
-        data: Booking,
         message: "not any booking found..",
       });
     }
@@ -60,15 +57,15 @@ const BookingStatus = async (req, res) => {
 
 const createBooking = async (req, res) => {
   try {
-      const response = await booking.createBooking(req.body);
-      // send mail
-      mailForBooking(response);
-      // await response.save()
-      return res.status(200).json({
-        sucess: true,
-        data: response,
-        message: "Your Booking is done..",
-      });
+    const response = await booking.createBooking(req.body);
+    // send mail
+    mailForBooking(response);
+    // await response.save()
+    return res.status(200).json({
+      sucess: true,
+      data: response,
+      message: "Your Booking is done..",
+    });
   } catch (error) {
     return res.status(500).json({
       sucess: false,
