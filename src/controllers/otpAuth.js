@@ -1,5 +1,7 @@
 const { TWILIO } = require("../helper/constants");
 const client = require("twilio")(TWILIO.ACCOUNT_SID, TWILIO.AUTH_TOKEN);
+const { TWILIO } = require("../helper/constants");
+const client = require("twilio")(TWILIO.ACCOUNT_SID, TWILIO.AUTH_TOKEN);
 
 const sendOTP = async (req, res, next) => {
   const { countryCode, phoneNumber } = req.body;
@@ -32,6 +34,7 @@ const verifyOtp = async (req, res, next) => {
   } catch (error) {
     res.send(`Error occusred at verifyng otp ${error}`);
   }
+};
 };
 
 module.exports = {

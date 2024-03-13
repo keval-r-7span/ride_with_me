@@ -1,24 +1,24 @@
 const express = require("express");
 const router = express.Router();
-
-const { 
+const validateRequest = require("../validation/bookingValidation")
+const {
   viewBooking,
   viewBookingById,
   createBooking,
   cancelBooking,
-  changeRideStatus } = require("../controllers/bookingController")
+  changeRideStatus,
+  updateBooking,
+  BookingStatus,
+  paymentStatus,
+} = require("../controllers/bookingController");
 
-const {verifyToken, 
-       isAdmin,
-       isDriver, 
-       isUser} = require('../middleware/authMiddleware')
-
-  
 router.get("/booking", viewBooking);
+router.get("/bookingstatus", BookingStatus);
 router.get("/booking/:id", viewBookingById);
-router.delete("/booking/:id/cancel", cancelBooking);
-router.post("/booking/create",verifyToken, isUser,createBooking)
-router.post("/booking/:id/completed",verifyToken, isDriver,changeRideStatus)
-
+router.post("/booking/create",validateRequest, createBooking);
+router.post("/booking/:id/completed", changeRideStatus);
+router.put("/booking/update/:id", updateBooking);
+router.post("/booking/payment/status/:id",paymentStatus)
+router.delete("/booking/cancel/:id", cancelBooking);
 
 module.exports = router;

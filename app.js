@@ -2,7 +2,8 @@ const express = require("express");
 const connectDB = require("./src/configs/dbConnection");
 const customerRoute = require("./src/routes/customerRoute");
 const bookingRoute = require("./src/routes/bookingRoute");
-const cookieParser = require("cookie-parser");
+const driverRoute = require('./src/routes/driverRoute')
+const { PORT } = require("./src/helper/constants");
 
 const app = express();
 
@@ -10,13 +11,12 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-const { PORT } = require("./src/helper/constants");
-
 // Define routes
 app.use("/api/v1", bookingRoute);
 app.use("/api/v1", customerRoute);
+app.use('/api/v1',driverRoute); 
 
-// Connect to MongoDB Atlas
+// Connect to MongoDB Atlas .
 connectDB();
 
 // Start the server

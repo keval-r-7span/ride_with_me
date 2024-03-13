@@ -21,4 +21,10 @@ const DISTANCE = {
   DISTANCE_MATRIX: process.env.DISTANCE_MATRIX_KEY,
 };
 
-module.exports = { PORT, JWT, DB_DATA, TWILIO, DISTANCE };
+const MAIL={
+    HOST:process.env.MAIL_HOST,
+    USER:process.env.MAIL_USER,
+    PASS:process.env.MAIL_PASS
+}
+
+module.exports = {PORT,JWT,DB_DATA,TWILIO,MAIL}

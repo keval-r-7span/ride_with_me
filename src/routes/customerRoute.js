@@ -11,6 +11,7 @@ const {signUp,
        forgotPassword} = require('../controllers/authController')
 const {sendOTP, 
        verifyOtp} = require('../controllers/otpAuth')
+const validateRequest = require('../validation/userValidation')
 
 const calcDistance = require('../helper/distance')
 
@@ -19,7 +20,7 @@ const calcDistance = require('../helper/distance')
 const role = require('../helper/role')
 
 // mapping with controllers
-router.post('/user/register', signUp);
+router.post('/user/register',validateRequest, signUp);
 router.post('/user/login', login)
 router.get('/user/view', getCustomer);
 router.get('/user/view/:id', getCustomerByID);

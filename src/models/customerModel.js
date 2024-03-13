@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const CustomerSchema = new mongoose.Schema(
   {
     name: {
+    name: {
       type: String,
     },
     email: {
@@ -11,6 +12,7 @@ const CustomerSchema = new mongoose.Schema(
       // unique: true,
     },
     phoneNumber: {
+      type: String,
       type: String,
       unique: true,
     },
