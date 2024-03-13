@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
+const crypto = require('crypto')
 
 const CustomerSchema = new mongoose.Schema(
   {
@@ -8,10 +8,10 @@ const CustomerSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
+      // unique: true,
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       unique: true,
     },
     password: {
@@ -25,23 +25,26 @@ const CustomerSchema = new mongoose.Schema(
     token: {
       type: String,
     },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetTokenExpires: {
+      type: Date,
+    }
     //location
     //profile
   },
   { timestamps: true }
 );
 
-const Customer = mongoose.model("Customer", CustomerSchema);
+CustomerSchema.method.createPasswordToken = function(){
+  const resetToken = crypto.randomBytes(32).toString('hex')
+  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
+  this.passwordResetTokenExpires = Date.now() + 10*60*1000;
 
-// joi Schema validation
-const customerJoiSchema = Joi.object({
-  name: Joi.string().min(3).max(15).required(),
-  email: Joi.string().email().required(),
-  phoneNumber: Joi.number().min(10).max(10).required(),
-  password: Joi.string().min(4).max(12).required(),
-});
+  console.log(resetToken, this.passwordResetToken);
+  return resetToken;
+}
 
-module.exports = {
-  Customer,
-  validateCustomer: (user) => customerJoiSchema.validate(user),
-};
+module.exports = mongoose.model("Customer", CustomerSchema);
+
