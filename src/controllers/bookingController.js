@@ -1,159 +1,110 @@
+const { trueResponse, falseResponse } = require("../configs/responseMes");
 const mailForBooking = require("../helper/sendMail");
-const booking = require("../services/bookingService");
+const bookingService = require("../services/bookingService");
 const bookingJoiSchema = require("../validation/bookingValidation");
 
 const viewBooking = async (req, res) => {
   try {
-    const Booking = await booking.viewBookingAll();
-    if (!Booking) {
-      return res.status(200).json({
-        success: false,
-        message: "not any booking found..",
-      });
+    const response = await bookingService.viewBookingAll();
+    if (!response) {
+      return falseResponse(res, "NOT FOUND USER");
     }
-    res.status(200).json({
-      success: true,
-      data: Booking,
-      message: "all avilable booking",
-    });
-  } catch (err) {
-    return res.status(404).send("something wrong in view_booking... " + err);
+    return trueResponse(res, response);
+  } catch (error) {
+    return falseResponse(res, error);
   }
 };
 
 const viewBookingById = async (req, res) => {
   try {
-    const Booking = await booking.viewBooking(req.params.id);
-    if (!Booking) {
-      return res.status(200).json({
-        success: false,
-        data: Booking,
-        message: "no booking found for this user...",
-      });
+    const response = await bookingService.viewBooking(req.params.id);
+    if (!response) {
+      return falseResponse(res, "NOT FOUND USER");
     }
-    res.status(200).json({
-      success: true,
-      data: Booking,
-    });
-  } catch (err) {
-    return res.status(404).send("something wrong in view_booking... " + err);
+    return trueResponse(res, response);
+  } catch (error) {
+    return falseResponse(res, error);
   }
 };
 
 const BookingStatus = async (req, res) => {
   try {
     const status = req.body.status || req.query.status;
-    const Booking = await booking.viewBookingFilter({ status });
-    res.status(200).json({
-      success: true,
-      data: Booking,
-    });
+    const response = await bookingService.viewBookingFilter({ status });
+    return trueResponse(res, response);
   } catch (error) {
-    return res
-      .status(404)
-      .json({ message: "something wrong in Booking_status... " + error });
+    return falseResponse(res, error);
   }
 };
 
 const createBooking = async (req, res) => {
   try {
-    const response = await booking.createBooking(req.body);
+    const response = await bookingService.createBooking(req.body);
     // send mail
     mailForBooking(response);
-    // await response.save()
-    return res.status(200).json({
-      sucess: true,
-      data: response,
-      message: "Your Booking is done..",
-    });
+    await response.save();
+    return trueResponse(res, response);
   } catch (error) {
-    return res.status(500).json({
-      sucess: false,
-      message: "Error in create_booking " + error,
-    });
+    return falseResponse(res, error);
   }
 };
 
 const updateBooking = async (req, res) => {
   try {
-    const response = await booking.updateBooking(
+    const response = await bookingService.updateBooking(
       req.params.id,
       {
         $set: req.body,
       },
       { new: true }
     );
-    return res.status(200).json({
-      sucess: true,
-      data: response,
-      message: "booking updated..",
-    });
+    if (!response) {
+      return falseResponse(res, "NOT FOUND USER");
+    }
+    return trueResponse(res, response);
   } catch (error) {
-    return res.status(500).json({
-      sucess: false,
-      message: "Error in update_booking " + error,
-    });
+    return falseResponse(res, error);
   }
 };
 
 const cancelBooking = async (req, res) => {
   try {
-    const response = await booking.cancelBooking(req.params.id);
+    const response = await bookingService.cancelBooking(req.params.id);
     if (!response) {
-      return res.status(200).json({
-        success: false,
-        message: "no booking found this user..",
-      });
+      return falseResponse(res, "NOT FOUND USER");
     }
-    return res.status(200).json({
-      success: true,
-      message: "Your booking is cancel sucessfully..",
-    });
-  } catch (err) {
-    return res
-      .status(404)
-      .json({ message: "something wrong in cancel_booking... " + err });
+    return trueResponse(res, response);
+  } catch (error) {
+    return falseResponse(res, error);
   }
 };
 
 const changeRideStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const ridebooking = await booking.rideComplete(id);
+    const ridebooking = await bookingService.rideComplete(id);
     if (!ridebooking) {
-      return res
-        .status(404)
-        .json({ sucess: false, message: "Booking not found" });
+      return falseResponse(res, "NOT FOUND");
     }
     ridebooking.status = "completed";
     await ridebooking.save();
-    res.json({
-      sucess: true,
-      status: ridebooking.status,
-      message: "Booking marked as completed",
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    return trueResponse(res, ridebooking);
+  } catch (error) {
+    return falseResponse(res, error);
   }
 };
 
 const paymentStatus = async (req, res) => {
   try {
-    const ridebooking = await booking.rideComplete(req.params.id);
+    const ridebooking = await bookingService.rideComplete(req.params.id);
     if (!ridebooking) {
-      return res
-        .status(404)
-        .json({ sucess: false, message: "Payment not completed" });
+      return falseResponse(res, "NOT FOUND");
     }
     ridebooking.payment_status = "completed";
     await ridebooking.save();
-    res.json({
-      sucess: true,
-      status: ridebooking.payment_status,
-      message: "payment status marked as completed",
-    });
+    return trueResponse(res, ridebooking);
   } catch (error) {
-    res.status(500).json({ error: err.message });
+    return falseResponse(res, error);
   }
 };
 
