@@ -1,4 +1,5 @@
 const customerService = require("../services/userService");
+const CustomerSchema = require("../models/customerModel")
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
 const { JWT } = require("../helper/constants");
@@ -149,6 +150,26 @@ const resetPassword = async (req, res) => {
     return falseResponseError(res, error)
   }
 };
+
+// const forgotPassword = async (req, res, next) => {
+//   const {email} = req.body
+//   //Get USer based on email
+//   const user = await customerService.findCustomer({email})
+//   if(!user){
+//     console.log("email Doesn't exist");
+//     next()
+//   }
+//   //generate random reset token and save it in db
+//   const resetToken = user.createPasswordToken()
+//   console.log("resetToken");
+//   await CustomerSchema.save()
+//   //Send token back to user email 
+// }
+
+// exports.resetPassword = (req, res, next) => {
+// }
+
+
 
 module.exports = {
   signUp,
