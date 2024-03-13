@@ -42,7 +42,7 @@ const signUp = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Something went wrong in signUp " + error,
+      message: "Something went wrong in signUp "+error,
     });
   }
 };
