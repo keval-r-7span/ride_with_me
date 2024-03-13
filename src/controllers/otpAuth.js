@@ -10,9 +10,13 @@ const sendOTP = async (req, res, next) => {
         to: `+${countryCode}${phoneNumber}`,
         channel: "sms",
       });
-    res.send(`OTP SENT ${JSON.stringify(otpResponse)}`);
+    res.status(200).json({
+      success: true,
+      data: otpResponse.status,
+      message: "OTP SENT Successfull"
+    })
   } catch (error) {
-    res.send(`Error occusred at sending otp ${error}`);
+    return res.status(500).json()
   }
 };
 const verifyOtp = async (req, res, next) => {

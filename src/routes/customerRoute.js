@@ -5,20 +5,19 @@ const {
        deleteCustomer, 
        updateCustomer, 
        getCustomer, 
-       getCustomerByID} = require('../controllers/customerController')
-const {
-       signUp,
-       login} = require('../controllers/authController')
+       getCustomerByID,} = require('../controllers/customerController')
+const {signUp,
+       login,
+       forgotPassword} = require('../controllers/authController')
 const {sendOTP, 
        verifyOtp} = require('../controllers/otpAuth')
 const validateRequest = require('../validation/userValidation')
 
 const calcDistance = require('../helper/distance')
 
-const {verifyToken, 
-       isAdmin, 
-       isDriver, 
-       isUser} = require('../middleware/authMiddleware')
+// const {verifyToken} = require('../middleware/authMiddleware')
+
+const role = require('../helper/role')
 
 // mapping with controllers
 router.post('/register',validateRequest, signUp);
@@ -34,3 +33,7 @@ router.post('/verify-otp', verifyOtp)
 router.get('/maps/distance', calcDistance)
 
 module.exports = router;
+
+// app.post('/',auth,(req,res,next) => {
+//        res.status(200).send("flight rescheduled");
+//        })

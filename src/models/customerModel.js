@@ -7,7 +7,7 @@ const CustomerSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
+      // unique: true,
     },
     phoneNumber: {
       type: String,
@@ -24,6 +24,12 @@ const CustomerSchema = new mongoose.Schema(
     token: {
       type: String,
     },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetTokenExpires: {
+      type: Date,
+    }
     //location
     //profile
   },

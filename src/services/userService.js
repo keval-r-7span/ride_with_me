@@ -2,7 +2,7 @@ const CustomerSchema = require('../models/customerModel')
 
 exports.viewCustomer = async () => {
   try {
-    return await Customer.find();
+    return await CustomerSchema.find();
   } catch (error) {
     throw error;
   }
