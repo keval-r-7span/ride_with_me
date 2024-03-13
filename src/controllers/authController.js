@@ -1,4 +1,5 @@
 const customerService = require("../services/userService");
+const CustomerSchema = require("../models/customerModel")
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
 const { trueResponse, falseResponse, falseResponseError } = require("../configs/responseMes");
@@ -48,6 +49,26 @@ const signUp = async (req, res) => {
     });
   }
 };
+
+// const resetPassword = async(req, res) => {
+//   try {
+//     const {phoneNumber} = req.body;
+//     const existNumber = await customerService.findCustomer({phoneNumber});
+//     if(!existNumber){
+//       console.log("Please Register first");
+//     }
+//     else{
+//       //sendotp
+//       //verifyotp
+//       const newHashedPassword = await bcrypt.hash(password, 10);
+//       const updatePassword = await customerService.newPassword(
+//         {password: hashedPassword},
+//         {$set:{password: newHashedPassword}})
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 const login = async (req, res) => {
   try {
