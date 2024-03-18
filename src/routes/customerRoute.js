@@ -20,9 +20,9 @@ const { verifyToken } = require("../middleware/authMiddleware");
 
 const calcDistance = require('../helper/distance')
 
-// const {verifyToken} = require('../middleware/authMiddleware')
+const {verifyToken} = require('../middleware/authMiddleware')
 
-const role = require('../helper/role')
+// const role = require('../helper/role')
 
 // mapping with controllers
 router.post('/register',validateRequest, signUp);
