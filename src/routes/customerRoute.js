@@ -28,7 +28,4 @@ router.delete('/delete/:id', deleteCustomer);
 router.post('/send-otp', sendOTP)
 router.post('/verify-otp', verifyOtp)
 
-//calc distance 
-router.get('/maps/distance', calcDistance)
-
 module.exports = router;

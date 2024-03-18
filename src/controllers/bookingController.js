@@ -11,6 +11,7 @@ const viewBooking = async (req, res) => {
     if (!response) {
       return falseResponse(res, "NOT FOUND USER");
     }
+    console.log(response);
     return trueResponse(res, response);
   } catch (error) {
     return falseResponse(res, error);
