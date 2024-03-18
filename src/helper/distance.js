@@ -1,6 +1,8 @@
 const { DISTANCE } = require("../helper/constants");
+const {trueResponse, falseResponse} = require('../configs/responseMes')
 const dotenv = require("dotenv");
 dotenv.config();
+const logger = require('../utils/indexLogger')
 
 const calcDistance = async (req, res) => {
   try {
@@ -11,18 +13,12 @@ const calcDistance = async (req, res) => {
     const data = await response.json();
     const traveledDistance = data.rows[0].elements[0].distance.value;
     const totalFare = Math.ceil(traveledDistance * 0.022);
-    console.log(`Total Fare :${totalFare} INR`);
+    logger.info(`Total Fare :${totalFare} INR`);
+    
 
-    return res.json({
-      success: true,
-      data: data,
-      message: "Distance between two cordinates",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.json({
-      success: false,
-      message: "Error occured at calculating distance " + error,
-    });
+    return falseResponse(res, error)
   }
 };
 

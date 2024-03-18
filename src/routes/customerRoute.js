@@ -7,17 +7,16 @@ const {
        getCustomer, 
        getCustomerByID,} = require('../controllers/customerController')
 const {signUp,
-       login,
-       forgotPassword} = require('../controllers/authController')
+       login} = require('../controllers/authController')
 const {sendOTP, 
        verifyOtp} = require('../controllers/otpAuth')
 const validateRequest = require('../validation/userValidation')
 
 const calcDistance = require('../helper/distance')
 
-// const {verifyToken} = require('../middleware/authMiddleware')
+const {verifyToken} = require('../middleware/authMiddleware')
 
-const role = require('../helper/role')
+// const role = require('../helper/role')
 
 // mapping with controllers
 router.post('/register',validateRequest, signUp);

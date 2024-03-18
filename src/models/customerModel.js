@@ -20,16 +20,16 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "driver", "user"],
       default: "user",
-    },
-    token: {
-      type: String,
-    },
-    passwordResetToken: {
-      type: String,
-    },
-    passwordResetTokenExpires: {
-      type: Date,
     }
+    // token: {
+    //   type: String,
+    // },
+    // passwordResetToken: {
+    //   type: String,
+    // },
+    // passwordResetTokenExpires: {
+    //   type: Date,
+    // },
     //location
     //profile
   },

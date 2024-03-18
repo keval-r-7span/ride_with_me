@@ -2,11 +2,11 @@ const express = require("express");
 const connectDB = require("./src/configs/dbConnection");
 const indexRoute = require("./src/routes/index");
 const { PORT } = require("./src/helper/constants");
+const logger = require('./src/utils/indexLogger')
 
 const app = express();
 
-app.use(cookieParser());
-
+// app.use(cookieParser());
 app.use(express.json());
 
 // Define routes
@@ -17,5 +17,5 @@ connectDB();
 
 // Start the server
 app.listen(PORT || 3200, () => {
-  console.log(`🚀 Server is running.. on http://localhost:${PORT}🚀`);
+  logger.info(`🚀 Server is running.. on http://localhost:${PORT}🚀`);
 });

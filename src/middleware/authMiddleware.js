@@ -1,52 +1,36 @@
 const jwt = require("jsonwebtoken");
-const role = require("../helper/role")
+// const role = require("../helper/role");
 const { JWT } = require("../helper/constants");
-const customerService = require('../services/userService')
-const CustomerSchema = require('../models/customerModel')
+// const customerService = require("../services/userService");
+// const CustomerSchema = require("../models/customerModel");
+const { falseResponse } = require("../configs/responseMes");
 
 exports.verifyToken = (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
-      return res.json({
-        success: false,
-        message: "Token Missing",
-      });
+      return falseResponse(res);
     }
     try {
       const decode = jwt.verify(token, JWT.SECRET, (err, decodeToken) => {
-        if(err){
+        if (err) {
           console.log(err);
-          return sendError("Error: Broken Or Expired Token");
+          console.log(decode);
+          return falseResponse(res);
         }
-        if (!decodeToken.role) return sendError("Error: Role missing");
-      })
-      //verify token
-      // const payload = jwt.verify(token, JWT.SECRET);
-      // const decode = jwt.verify(token, JWT.SECRET);
-      // if(role[payload.role].find(function(url){ 
-      //   return url==req.baseUrl}
-      //   ))
-      //   {req.user=payload
-      //   next();  
-      //   }
-    } catch (error) {
-      return res.json({
-        success: false,
-        message: "invalid Token " + error,
+        if (!decodeToken.role) {
+          return falseResponse(res)
+        }
       });
+    } catch (error) {
+      return falseResponse(res, error)
     }
     next();
   } catch (error) {
-    return res.json({
-      success: false,
-      message: "There was error in verification " + error,
-    });
+    return falseResponse(res, error)
   }
 };
-
-
 
 // exports.isDriver = (req, res, next) => {
 //   try {
@@ -111,7 +95,7 @@ exports.verifyToken = (req, res, next) => {
 //   const resetToken = CustomerSchema.createPasswordToken()
 
 //   await CustomerSchema.save()
-//   //Send token back to user email 
+//   //Send token back to user email
 // }
 
 // exports.resetPassword = (req, res, next) => {

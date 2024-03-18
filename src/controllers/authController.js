@@ -1,14 +1,17 @@
+const { trueResponse, falseResponse } = require("../configs/responseMes");
 const customerService = require("../services/userService");
-const CustomerSchema = require("../models/customerModel")
+const CustomerSchema = require("../models/customerModel");
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
 const { JWT } = require("../helper/constants");
+const logger = require("../configs/mailTransport");
 
 const signUp = async (req, res) => {
   try {
     const { name, email, phoneNumber, password, role } = req.body;
     const userExist = await customerService.findCustomer({ email });
-    console.log(userExist);
+    // console.log(userExist);
+    logger.info(userExist);
     if (userExist) {
       throw new Error("User Already exist with same Email: " + { email });
     }
@@ -22,11 +25,7 @@ const signUp = async (req, res) => {
         role,
       });
       await response.save();
-      return res.status(200).json({
-        success: true,
-        message: "User created successfully",
-        data: response,
-      });
+      return trueResponse(res, response);
     } else {
       return res.status(400).json({
         success: false,
@@ -55,34 +54,31 @@ const signUp = async (req, res) => {
   }
 };
 
-// const resetPassword = async(req, res) => {
+// const resetPassword = async (req, res) => {
 //   try {
-//     const {phoneNumber} = req.body;
-//     const existNumber = await customerService.findCustomer({phoneNumber});
-//     if(!existNumber){
+//     const { phoneNumber } = req.body;
+//     const existNumber = await customerService.findCustomer({ phoneNumber });
+//     if (!existNumber) {
 //       console.log("Please Register first");
-//     }
-//     else{
+//     } else {
 //       //sendotp
 //       //verifyotp
 //       const newHashedPassword = await bcrypt.hash(password, 10);
 //       const updatePassword = await customerService.newPassword(
-//         {password: hashedPassword},
-//         {$set:{password: newHashedPassword}})
+//         { password: hashedPassword },
+//         { $set: { password: newHashedPassword } }
+//       );
 //     }
 //   } catch (error) {
 //     console.log(error);
 //   }
-// }
+// };
 
 const login = async (req, res) => {
   try {
     const { phoneNumber, password } = req.body;
     if (!phoneNumber || !password) {
-      return res.status(500).json({
-        success: false,
-        message: "Please enter proper info! ",
-      });
+      return falseResponse(res);
     }
     let registeredUser = await customerService.findCustomer({ phoneNumber });
     if (!registeredUser) {
@@ -92,10 +88,7 @@ const login = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in login " + error,
-    });
+    return falseResponse(res, error);
   }
 };
 
@@ -111,17 +104,15 @@ const login = async (req, res) => {
 //   const resetToken = user.createPasswordToken()
 //   console.log("resetToken");
 //   await CustomerSchema.save()
-//   //Send token back to user email 
+//   //Send token back to user email
 // }
 
 // exports.resetPassword = (req, res, next) => {
 // }
 
-
-
 module.exports = {
   signUp,
-  login
+  login,
   // forgotPassword
   // resetPassword
 };

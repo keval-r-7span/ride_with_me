@@ -20,6 +20,6 @@ exports.falseResponse = (res, err) => {
   logger.error("ERROR " + err)
   return res.status(404).json({
     sucess: false,
-    message: err,
+    message: "error occured "+err,
   });
 };
