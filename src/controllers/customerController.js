@@ -1,34 +1,21 @@
+const { trueResponse, falseResponse } = require("../configs/responseMes");
 const customerService = require("../services/userService");
 
 const getCustomer = async (req, res) => {
   try {
     const response = await customerService.viewCustomer();
-    return res.status(200).json({
-      success: true,
-      data: response,
-      message: "Successfully Fetched all customer",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed due to some error in getCustomer" + error,
-    });
+    return falseResponse(res, error)
   }
 };
 
 const getCustomerByID = async (req, res) => {
   try {
     const response = await customerService.viewCustomerById(req.params.id);
-    return res.status(200).json({
-      success: true,
-      data: response,
-      message: "Successfully found",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.status().json({
-      success: false,
-      message: "Something went wrong in finding by ID " + error,
-    });
+    return falseResponse(res, error)
   }
 };
 
@@ -40,32 +27,18 @@ const updateCustomer = async (req, res) => {
       { _id: id },
       { name, email, phoneNumber, role }
     );
-    return res.status(200).json({
-      success: true,
-      data: response,
-      message: "updated Successfully",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Cannot find ID to update" + error,
-    });
+    return falseResponse(res, error)
   }
 };
 
 const deleteCustomer = async (req, res) => {
   try {
     const response = await customerService.deleteCustomer(req.params.id);
-    return res.status(204).json({
-      success: true,
-      data: response,
-      message: "User deleted successfully!",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong in deletebyID " + error,
-    });
+    return falseResponse(res, error)
   }
 };
 

@@ -27,4 +27,4 @@ const MAIL={
     PASS:process.env.MAIL_PASS
 }
 
-module.exports = {PORT,JWT,DB_DATA,TWILIO,MAIL}
+module.exports = {PORT,JWT,DB_DATA,TWILIO,DISTANCE,MAIL}

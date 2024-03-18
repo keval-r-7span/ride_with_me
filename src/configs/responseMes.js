@@ -16,6 +16,6 @@ exports.falseResponse = (res) => {
 exports.falseResponse = (res, err) => {
   return res.status(404).json({
     sucess: false,
-    message: err,
+    message: "error occured "+err,
   });
 };
