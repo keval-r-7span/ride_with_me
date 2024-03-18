@@ -13,16 +13,9 @@ const getCustomer = async (req, res) => {
 const getCustomerByID = async (req, res) => {
   try {
     const response = await customerService.viewCustomerById(req.params.id);
-    return res.status(200).json({
-      success: true,
-      data: response,
-      message: "Successfully found",
-    });
+    return trueResponse(res, response)
   } catch (error) {
-    return res.status().json({
-      success: false,
-      message: "Something went wrong in finding by ID " + error,
-    });
+    return falseResponse(res, error)
   }
 };
 

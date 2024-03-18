@@ -1,14 +1,17 @@
+const { trueResponse, falseResponse } = require("../configs/responseMes");
 const customerService = require("../services/userService");
-const CustomerSchema = require("../models/customerModel")
+const CustomerSchema = require("../models/customerModel");
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
 const { JWT } = require("../helper/constants");
+const logger = require("../configs/mailTransport");
 
 const signUp = async (req, res) => {
   try {
     const { name, email, phoneNumber, password, role } = req.body;
     const userExist = await customerService.findCustomer({ email });
-    console.log(userExist);
+    // console.log(userExist);
+    logger.info(userExist);
     if (userExist) {
       throw new Error("User Already exist with same Email: " + { email });
     }
@@ -22,11 +25,7 @@ const signUp = async (req, res) => {
         role,
       });
       await response.save();
-      return res.status(200).json({
-        success: true,
-        message: "User created successfully",
-        data: response,
-      });
+      return trueResponse(res, response);
     } else {
       return res.status(400).json({
         success: false,
@@ -163,13 +162,11 @@ const resetPassword = async (req, res) => {
 //   const resetToken = user.createPasswordToken()
 //   console.log("resetToken");
 //   await CustomerSchema.save()
-//   //Send token back to user email 
+//   //Send token back to user email
 // }
 
 // exports.resetPassword = (req, res, next) => {
 // }
-
-
 
 module.exports = {
   signUp,
