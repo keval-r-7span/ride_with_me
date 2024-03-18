@@ -1,3 +1,4 @@
+const logger = require("../helper/logger");
 const { trueResponse, falseResponse } = require("../configs/responseMes");
 const mailForBooking = require("../helper/sendMail");
 const bookingService = require("../services/bookingService");
@@ -40,7 +41,6 @@ const BookingStatus = async (req, res) => {
 const createBooking = async (req, res) => {
   try {
     const response = await bookingService.createBooking(req.body);
-    // send mail
     mailForBooking(response);
     await response.save();
     return trueResponse(res, response);

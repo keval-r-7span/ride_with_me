@@ -1,0 +1,7 @@
+{"level":"info","message":"hello"}
+{"level":"info","message":"OK"}
+{"level":"error","message":"ERROR"}
+{"level":"error","message":"ERROR"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"65f14e80a2404a2255e1e41\" (type string) at path \"_id\" for model \"Booking\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"65f14e80a2404a2255e1e41\"","value":"65f14e80a2404a2255e1e41","valueType":"string"}
+{"level":"error","message":"NOT FOUND USER"}
+{"level":"error","message":"NOT FOUND USER"}
