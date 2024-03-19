@@ -32,10 +32,11 @@ exports.deleteDriver = async(query)=>{
   }
 };
 
-exports.availableDrivers = async (query) => {
+exports.availableDrivers = async () => {
     try {
-        return await driverSchema.find(query).select('name').select('phoneNumber').select('email');
+        return await driverSchema.find({ availability: 'available' }).select('name');
     } catch (error) {
         throw error;
     }
 };
+

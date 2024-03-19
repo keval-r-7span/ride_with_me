@@ -1,19 +1,82 @@
 const driverService = require("../services/driverService");
-const updateDriverJoiSchema = require("../validation/updateDriverValidation");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { JWT } = require("../helper/constants");
+
+exports.signUp = async (req, res) => {
+  try {
+    const { name, email, phoneNumber, vehicleDetails, password, role, token } =
+      req.body;
+    const userExist = await driverService.findDriver({ email });
+    if (userExist) {
+      throw new Error("User Already exist with same Email");
+    }
+    if (role !== "driver" && role == "") {
+      return res.status(400).json({
+        success: false,
+        message: "check your role",
+      });
+    }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const response = await driverService.registerUser({
+        name,
+        email: email.toLowerCase(),
+        phoneNumber,
+        vehicleDetails,
+        password: hashedPassword,
+        role,
+      });
+      await response.save();
+      return res.status(200).json({
+        success: true,
+        data: response,
+        message: "User created successfully",
+      });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong in signUp " + error,
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { phoneNumber, password } = req.body;
+    if (!phoneNumber || !password) {
+      return res.status(500).json({
+        success: false,
+        message: "Please enter proper info! ",
+      });
+    }
+    const registeredUser = await driverService.findDriver({ phoneNumber });
+    if (!registeredUser) {
+      return res.json({
+        success: false,
+        message: "Please Register First",
+      });
+    } else {
+      return res.json({
+        success: true,
+        message: "User is successfully logged in",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in login " + error,
+    });
+  }
+};
 
 exports.updateDriver = async (req, res) => {
   try {
-      const { id } = req.params;
-      const { error, value } = updateDriverJoiSchema.validate(req.body);
-    if (error) {
-      return res.status(400).json({
-        success: false,
-        message: error.details[0].message,
-      });
-    }
-    const response = await driverService.updateDriver({ _id: id }, req.body, {
-      new: true,
-    });
+    const { id } = req.params
+    const { name, phoneNumber, availability, vehicleDetails } = req.body
+    const response = await driverService.updateDriver(
+        {_id: id}, 
+        {name, phoneNumber, availability, vehicleDetails},
+    )
     return res.status(200).json({
       success: true,
       data: response,
@@ -44,18 +107,18 @@ exports.deleteDriver = async (req, res) => {
   }
 };
 
-exports.availableDrivers = async (req, res) => {
-    try {
-        const availableDrivers = await driverService.availableDrivers({ availability: 'available'});
-        res.status(200).json({ 
-            success: true,
-            drivers: availableDrivers
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ 
-            success: false, 
-            message: "Failed to fetch available drivers" 
-        });
-    }
+exports.availableDrivers = async (req, res, next) => {
+  try {
+    const availableDrivers = await driverService.availableDrivers();
+    res.status(200).json({
+      success: true,
+      drivers: availableDrivers,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch available drivers",
+    });
+  }
 };
