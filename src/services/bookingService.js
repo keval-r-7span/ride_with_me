@@ -1,3 +1,5 @@
+const { log } = require("winston");
+const logger = require("../helper/logger");
 const BookingSchema = require("../models/bookingModel");
 
 exports.viewBookingAll = async () => {
@@ -63,11 +65,12 @@ exports.rideComplete = async (query) => {
   try {
     return await BookingSchema.findById(query);
   } catch (error) {
+    logger.error(error);
     throw error;
   }
 };
 
-exports.getMonthlyRevenue = async () => {
+exports.getRevenue = async () => {
   try {
     const monthlyRevenue = await BookingSchema.aggregate([
       {
@@ -83,9 +86,29 @@ exports.getMonthlyRevenue = async () => {
         $sort: { "_id.year": 1, "_id.month": 1 },
       },
     ]);
-
     return monthlyRevenue;
   } catch (error) {
-    throw error;
+    console.log("ERROR in Aggregation " + error);
+  }
+};
+
+exports.aggregateBookings = async () => {
+  try {
+    const result = await BookingSchema.aggregate([
+      {
+        $group: {
+          _id: {
+            day: { $dayOfMonth: "$createdAt" },
+            week: { $week: "$createdAt" },
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" },
+          },
+          totalBookings: { $sum: 1 },
+        },
+      },
+    ]);
+    return result;
+  } catch (error) {
+    console.log("ERROR in Aggregation " + error);
   }
 };
