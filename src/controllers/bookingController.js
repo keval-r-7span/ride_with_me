@@ -3,6 +3,7 @@ const { trueResponse, falseResponse } = require("../configs/responseMes");
 const mailForBooking = require("../utils/sendMail");
 const bookingService = require("../services/bookingService");
 const bookingJoiSchema = require("../validation/bookingValidation");
+const { json } = require("body-parser");
 
 const viewBooking = async (req, res) => {
   try {
@@ -41,7 +42,7 @@ const BookingStatus = async (req, res) => {
 const createBooking = async (req, res) => {
   try {
     const response = await bookingService.createBooking(req.body);
-    mailForBooking(response);
+    // mailForBooking(response);
     await response.save();
     return trueResponse(res, response);
   } catch (error) {
@@ -108,6 +109,24 @@ const paymentStatus = async (req, res) => {
   }
 };
 
+const getRevenue = async (req, res) => {
+  try {
+    const response = await bookingService.getRevenue();
+    return trueResponse(res, response);
+  } catch (error) {
+    return falseResponse(res, error);
+  }
+};
+
+const totalBooking = async (req, res) => {
+  try {
+    const response = await bookingService.aggregateBookings();
+    return trueResponse(res, response);
+  } catch (error) {
+    return falseResponse(res, error);
+  }
+};
+
 module.exports = {
   viewBooking,
   viewBookingById,
@@ -117,4 +136,6 @@ module.exports = {
   updateBooking,
   BookingStatus,
   paymentStatus,
+  getRevenue,
+  totalBooking,
 };

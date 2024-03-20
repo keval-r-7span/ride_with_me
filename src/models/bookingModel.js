@@ -28,7 +28,7 @@ const bookingSchema = new mongoose.Schema(
       default:"pending"
     },
     fare: {
-      type: Number,
+      type:Number,
     },
     payment_status: {
       type: String,
@@ -42,6 +42,10 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default:"Good Experience"
     },
+    createdAt:{
+      type:Date,
+      default:Date.now()
+    }
   },
   { timestamps: true }
 );

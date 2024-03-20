@@ -4,8 +4,8 @@ const dateFormate = require('../helper/dateFormatter')
 const mailForBooking = async (_doc) => {
   if(_doc.status==='accepted'){
     const dateTime = dateFormate(_doc.pickupTime).split(',')
-    await transporter.sendMail({
-      from: "Ride-ME",
+   return await transporter.sendMail({
+      from: "Ride-With-ME",
       to: "kevalrabadiya27@gmail.com",
       subject: "Ride-ME🚕",
       text: "Hello world?",
@@ -24,6 +24,9 @@ const mailForBooking = async (_doc) => {
       <p>Thank you for choosing our taxi service. Have a safe journey!</p>
       <p>Best regards,<br>Your Taxi Service Team</p>`,
     });
+  }
+  else{
+    return;
   }
 };
 

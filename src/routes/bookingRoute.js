@@ -10,11 +10,15 @@ const {
   updateBooking,
   BookingStatus,
   paymentStatus,
+  getRevenue,
+  totalBooking,
 } = require("../controllers/bookingController");
 
 router.get("/all", viewBooking);
 router.get("/status", BookingStatus);
 router.get("/:id", viewBookingById);
+router.get("/revenue/total", getRevenue);
+router.get("/monthly/total",totalBooking)
 router.post("/create", validateRequest, createBooking);
 router.post("/:id/completed", changeRideStatus);
 router.put("/update/:id", updateBooking);

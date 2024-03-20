@@ -57,7 +57,7 @@ exports.cancelBooking = async (query) => {
   try {
     return await BookingSchema.findByIdAndDelete(query);
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 
@@ -66,7 +66,6 @@ exports.rideComplete = async (query) => {
     return await BookingSchema.findById(query);
   } catch (error) {
     logger.error(error);
-    throw error;
   }
 };
 
