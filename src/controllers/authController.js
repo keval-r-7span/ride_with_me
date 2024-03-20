@@ -1,6 +1,4 @@
-const { trueResponse, falseResponse } = require("../configs/responseMes");
 const customerService = require("../services/userService");
-const CustomerSchema = require("../models/customerModel");
 const bcrypt = require("bcryptjs");
 const jwtToken = require("../validator/jwtToken");
 const { trueResponse, falseResponse, falseResponseError } = require("../configs/responseMes");
@@ -11,8 +9,7 @@ const signUp = async (req, res) => {
   try {
     const { name, email, phoneNumber, password, role } = req.body;
     const userExist = await customerService.findCustomer({ email });
-    // console.log(userExist);
-    logger.info(userExist);
+    console.log(userExist);
     if (userExist) {
       throw new Error("User Already exist with same Email: " + { email });
     }
