@@ -17,4 +17,10 @@ const customLogger = () => {
   });
 };
 
-module.exports = customLogger;
+let logger = null;
+
+if (process.env.NODE_ENV !== "production") {
+  logger = customLogger();
+}
+
+module.exports = logger;

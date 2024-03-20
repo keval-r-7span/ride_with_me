@@ -1,5 +1,5 @@
-const CustomerSchema  = require("../models/customerModel");
-const logger = require('../logger/logger')
+const CustomerSchema = require("../models/customerModel");
+const logger = require("../utils/logger");
 
 exports.viewCustomer = async () => {
   try {

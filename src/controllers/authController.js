@@ -1,15 +1,14 @@
 const customerService = require("../services/userService");
 const bcrypt = require("bcryptjs");
-const jwtToken = require("../validator/jwtToken");
+const jwtToken = require("../validation/jwtToken");
 const { trueResponse, falseResponse, falseResponseError } = require("../configs/responseMes");
-const mailForBooking = require("../helper/sendMail");
+const mailForBooking = require("../utils/sendMail");
 const crypto = require("crypto");
 
 const signUp = async (req, res) => {
   try {
     const { name, email, phoneNumber, password, role } = req.body;
     const userExist = await customerService.findCustomer({ email });
-    console.log(userExist);
     if (userExist) {
       throw new Error("User Already exist with same Email: " + { email });
     }
@@ -96,7 +95,6 @@ const resetPasswordToken = async (req, res) => {
       { new: true }
     );
     const url = `http://localhost:4000/update-password/${token}`;
-    console.log(url);
     await mailForBooking(email, "URL SENDING ", `link : ${url}`);
     return trueResponse(res, response)
   } catch (error) {

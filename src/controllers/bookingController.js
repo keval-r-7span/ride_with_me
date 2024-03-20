@@ -1,4 +1,4 @@
-const logger = require("../helper/logger");
+const logger = require('../utils/logger')
 const { trueResponse, falseResponse } = require("../configs/responseMes");
 const mailForBooking = require("../utils/sendMail");
 const bookingService = require("../services/bookingService");
@@ -11,7 +11,6 @@ const viewBooking = async (req, res) => {
     if (!response) {
       return falseResponse(res, "NOT FOUND USER");
     }
-    console.log(response);
     return trueResponse(res, response);
   } catch (error) {
     return falseResponse(res, error);

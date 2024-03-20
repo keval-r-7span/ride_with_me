@@ -1,5 +1,5 @@
 const { log } = require("winston");
-const logger = require("../helper/logger");
+const logger = require('../utils/logger')
 const BookingSchema = require("../models/bookingModel");
 
 exports.viewBookingAll = async () => {

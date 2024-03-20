@@ -1,4 +1,4 @@
-const logger  = require("../helper/logger");
+const logger = require('../utils/logger')
 
 exports.trueResponse = (res, data) => {
   return res.status(200).json({

@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("./src/configs/dbConnection");
 const indexRoute = require("./src/routes/index");
 const { PORT } = require("./src/helper/constants");
-const logger = require('./src/utils/indexLogger')
+const logger = require('./src/utils/logger')
 
 const app = express();
 
