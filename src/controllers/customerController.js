@@ -1,21 +1,21 @@
-const { trueResponse, falseResponse } = require("../configs/responseMes");
+const { trueResponse, falseResponseError } = require("../configs/responseMes");
 const customerService = require("../services/userService");
 
 const getCustomer = async (req, res) => {
   try {
     const response = await customerService.viewCustomer();
-    return trueResponse(res, response)
+    return trueResponse(res, response);
   } catch (error) {
-    return falseResponse(res, error)
+    return falseResponseError(res, error);
   }
 };
 
 const getCustomerByID = async (req, res) => {
   try {
     const response = await customerService.viewCustomerById(req.params.id);
-    return trueResponse(res, response)
+    return trueResponse(res, response);
   } catch (error) {
-    return falseResponse(res, error)
+    return falseResponseError(res, error);
   }
 };
 
@@ -27,18 +27,18 @@ const updateCustomer = async (req, res) => {
       { _id: id },
       { name, email, phoneNumber, role }
     );
-    return trueResponse(res, response)
+    return trueResponse(res, response);
   } catch (error) {
-    return falseResponse(res, error)
+    return falseResponseError(res, error);
   }
 };
 
 const deleteCustomer = async (req, res) => {
   try {
     const response = await customerService.deleteCustomer(req.params.id);
-    return trueResponse(res, response)
+    return trueResponse(res, response);
   } catch (error) {
-    return falseResponse(res, error)
+    return falseResponseError(res, error);
   }
 };
 

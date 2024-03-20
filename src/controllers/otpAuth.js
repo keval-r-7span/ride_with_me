@@ -1,40 +1,37 @@
 const { TWILIO } = require("../helper/constants");
 const client = require("twilio")(TWILIO.ACCOUNT_SID, TWILIO.AUTH_TOKEN);
+const { trueResponse, falseResponseError } = require("../configs/responseMes");
 
-const sendOTP = async (req, res, next) => {
-  const { countryCode, phoneNumber } = req.body;
+const sendOtp = async (req, res, next) => {
+  const { phoneNumber } = req.body;
   try {
-    const otpResponse = await client.verify.v2
+    const response = await client.verify.v2
       .services(TWILIO.SERVICE_SID)
       .verifications.create({
-        to: `+${countryCode}${phoneNumber}`,
+        to: `+91${phoneNumber}`,
         channel: "sms",
       });
-    res.status(200).json({
-      success: true,
-      data: otpResponse.status,
-      message: "OTP SENT Successfull"
-    })
+    return trueResponse(res, response);
   } catch (error) {
-    return res.status(500).json()
+    return falseResponseError(res, error);
   }
 };
 const verifyOtp = async (req, res, next) => {
-  const { countryCode, phoneNumber, otp } = req.body;
+  const { phoneNumber, otp } = req.body;
   try {
-    const verifiedResponse = await client.verify.v2
+    const response = await client.verify.v2
       .services(TWILIO.SERVICE_SID)
       .verificationChecks.create({
-        to: `+${countryCode}${phoneNumber}`,
+        to: `+91${phoneNumber}`,
         code: otp,
       });
-    res.send(`OTP VERIFIED SUCCESSFULLY: ${JSON.stringify(verifiedResponse)}`);
+    return trueResponse(res, response);
   } catch (error) {
-    res.send(`Error occusred at verifyng otp ${error}`);
+    return falseResponseError(res, error);
   }
 };
 
 module.exports = {
-  sendOTP,
+  sendOtp,
   verifyOtp,
 };

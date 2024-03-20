@@ -22,32 +22,15 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "driver", "user"],
       default: "user",
-    }
-    // token: {
-    //   type: String,
-    // },
-    // passwordResetToken: {
-    //   type: String,
-    // },
-    // passwordResetTokenExpires: {
-    //   type: Date,
-    // },
-    //location
-    //profile
+    },
+    token: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
-
-// CustomerSchema.method.createPasswordToken = function () {
-//   const resetToken = crypto.randomBytes(32).toString("hex");
-//   this.passwordResetToken = crypto
-//     .createHash("sha256")
-//     .update(resetToken)
-//     .digest("hex");
-//   this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
-
-//   console.log(resetToken, this.passwordResetToken);
-//   return resetToken;
-// };
 
 module.exports = mongoose.model("Customer", CustomerSchema);

@@ -13,7 +13,7 @@ exports.falseResponse = (res) => {
   });
 };
 
-exports.falseResponse = (res, err) => {
+exports.falseResponseError = (res, err) => {
   return res.status(404).json({
     sucess: false,
     message: "error occured "+err,
