@@ -11,4 +11,5 @@ const connectDB = async () => {
     logger.error("Error connecting to MongoDB Atlas:", error);
   }
 };
+
 module.exports = connectDB;
