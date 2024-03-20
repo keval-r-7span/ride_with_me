@@ -13,9 +13,9 @@ const getCustomer = async (req, res) => {
 const getCustomerByID = async (req, res) => {
   try {
     const response = await customerService.viewCustomerById(req.params.id);
-    return trueResponse(res, response)
+    return trueResponse(res, response);
   } catch (error) {
-    return falseResponse(res, error)
+    return falseResponseError(res, error);
   }
 };
 
