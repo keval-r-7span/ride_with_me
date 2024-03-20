@@ -1,4 +1,3 @@
-//App
 const express = require("express");
 const router = express.Router();
 const {
@@ -31,7 +30,7 @@ router.get('/view', getCustomer);
 router.get('/view/:id', getCustomerByID);
 router.put('/update/:id', updateCustomer);
 router.delete('/delete/:id', deleteCustomer);
-router.post('/send-otp', sendOTP)
+router.post('/send-otp', sendOtp)
 router.post('/verify-otp', verifyOtp)
 
 //calc distance 
