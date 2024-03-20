@@ -2,7 +2,7 @@ const { DISTANCE } = require("../helper/constants");
 const {trueResponse, falseResponse} = require('../configs/responseMes')
 const dotenv = require("dotenv");
 dotenv.config();
-const logger = require('../utils/logger')
+const logger = require('../utils/indexLogger')
 
 const calcDistance = async (req, res) => {
   try {
@@ -14,8 +14,9 @@ const calcDistance = async (req, res) => {
     const traveledDistance = data.rows[0].elements[0].distance.value;
     const totalFare = Math.ceil(traveledDistance * 0.022);
     logger.info(`Total Fare :${totalFare} INR`);
-  
-    return trueResponse(res, data)
+    
+
+    return trueResponse(res, response)
   } catch (error) {
     return falseResponse(res, error)
   }
