@@ -2,7 +2,7 @@ const { DISTANCE } = require("../helper/constants");
 const {trueResponse, falseResponse} = require('../configs/responseMes')
 const dotenv = require("dotenv");
 dotenv.config();
-const logger = require('../utils/indexLogger')
+const logger = require('../utils/logger')
 
 const calcDistance = async (req, res) => {
   try {
