@@ -1,14 +1,20 @@
-require("dotenv").config();
+import dotenv from 'dotenv'
 
-const PORT = process.env.PORT;
+dotenv.config()
+
+const PORT = parseInt(process.env.PORT || "3200");
 
 const JWT = {
   SECRET: process.env.JWT_SECRET,
   EXPIRES: process.env.EXPIRES,
 };
 
-const DB_DATA = {
-  DB_URL: process.env.DB_URL,
+interface DBData {
+  DB_URL: string;
+}
+
+const DB_DATA: DBData = {
+  DB_URL: process.env.DB_URL || '',
 };
 
 const TWILIO = {
@@ -26,5 +32,4 @@ const DISTANCE = {
   DISTANCE_MATRIX: process.env.DISTANCE_MATRIX_KEY,
 };
 
-
-module.exports = { PORT, JWT, DB_DATA, TWILIO,MAIL, DISTANCE };
+export { PORT, JWT, DB_DATA, TWILIO,MAIL, DISTANCE };

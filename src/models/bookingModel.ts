@@ -1,6 +1,19 @@
-const mongoose = require("mongoose");
+import mongoose, { Schema, Document } from 'mongoose';
 
-const bookingSchema = new mongoose.Schema(
+export interface Booking extends Document {
+  customer: mongoose.Schema.Types.ObjectId;
+  driver: mongoose.Schema.Types.ObjectId;
+  pickupLocation: string;
+  dropoffLocation:string;
+  pickupTime:string;
+  dropoffTime:string;
+  fare: number;
+  status: string;
+  payment_status:string;
+  comments:string;
+}
+
+const bookingSchema:Schema = new mongoose.Schema(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
@@ -42,12 +55,8 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default:"Good Experience"
     },
-    createdAt:{
-      type:Date,
-      default:Date.now()
-    }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Booking", bookingSchema);
+export default mongoose.model<Booking>("Booking", bookingSchema);
