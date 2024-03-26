@@ -6,15 +6,25 @@ const {
   login,
   deleteDriver, 
   updateDriver,
-  availableDrivers
+  availableDrivers,
+  addVehicle,
+  updateVehicle
 } = require('../controllers/driverController');
-const validateRequest = require('../validation/driverValidation');
-const validateUpdateRequest = require('../validation/driverValidation');
+const {
+  validateRequest,
+  validtaeAddVehicle
+} = require('../validation/driverValidation');
+const {
+  validateUpdateRequest,
+  validateUpdateVehicle
+} = require('../validation/updateValidation');
 
   router.post('/register', validateRequest, signUp);
   router.post('/login', login);
-  router.delete('/delete/:id', deleteDriver);
   router.put('/update/:id', validateUpdateRequest, updateDriver);
+  router.delete('/delete/:id', deleteDriver);
+  router.post('/addvehicle', validtaeAddVehicle, addVehicle);
+  router.put('/vehicle/:id', validateUpdateVehicle, updateVehicle);
   router.get('/available', availableDrivers);
 
 module.exports = router;

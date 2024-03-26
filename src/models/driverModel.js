@@ -12,12 +12,6 @@ const driverSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  vehicleDetails: {
-    type: String,
-    model: { type: String },
-    year: { type: Number },
-    licensePlate: { type: String }
-  },
   availability: {
     type: String,
     enum: ['available', 'unavailable'],
