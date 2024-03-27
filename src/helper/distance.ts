@@ -1,6 +1,6 @@
 import { Request,Response } from 'express';
-const { DISTANCE } = require("../helper/constants");
-const dotenv = require("dotenv");
+import { DISTANCE } from '../helper/constants';
+import dotenv from 'dotenv';
 dotenv.config();
 
 const calcDistance = async (req:Request, res:Response) => {
@@ -17,4 +17,4 @@ const calcDistance = async (req:Request, res:Response) => {
   }
 };
 
-module.exports = calcDistance;
+export default calcDistance;

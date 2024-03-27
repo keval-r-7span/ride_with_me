@@ -26,7 +26,7 @@ const viewBookingById = async (req:Request, res:Response) => {
   }
 };
 
-const BookingStatus = async (req:Request, res:Response) => {
+const bookingStatus = async (req:Request, res:Response) => {
   try {
     const status = req.body.status || req.query.status;
     const response = await bookingService.viewBookingFilter({ status });
@@ -39,8 +39,8 @@ const BookingStatus = async (req:Request, res:Response) => {
 const createBooking = async (req:Request, res:Response) => {
   try {
     const response = await bookingService.createBooking(req.body);
-    // mailForBooking(response);
     await response.save();
+    // mailForBooking(response);     //send mail after booking sucess
     return res.status(200).json({sucess:true,data:response})
   } catch (error) {
     return res.status(200).json({sucess:false,message:error});
@@ -125,4 +125,4 @@ const totalBooking = async (req:Request, res:Response) => {
 };
 
 
-export {viewBooking,createBooking,updateBooking,cancelBooking,getRevenue,totalBooking,paymentStatus,changeRideStatus,BookingStatus,viewBookingById}
+export {viewBooking,createBooking,updateBooking,cancelBooking,getRevenue,totalBooking,paymentStatus,changeRideStatus,bookingStatus,viewBookingById}

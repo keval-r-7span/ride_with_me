@@ -13,8 +13,11 @@
   "author": "7Span Interns",
   "license": "ISC",
   "dependencies": {
+    "@types/winston": "^2.4.4",
     "express": "^4.19.1",
-    "mongoose": "^8.2.2"
+    "joi": "^17.12.2",
+    "mongoose": "^8.2.2",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

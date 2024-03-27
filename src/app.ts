@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './configs/dbConnection';
 import indexRoute from './routes/index';
 import {PORT} from './helper/constants';
+import logger from './utils/logger';
 // import logger from './src/utils/logger'
 
 const app = express();
@@ -16,5 +17,5 @@ connectDB();
 
 // Start the server
 app.listen(PORT, () => {
-  console.log (`🚀 Server is running.. on http://localhost:${PORT}🚀..`);
+  logger.info(`🚀 Server is running.. on http://localhost:${PORT}🚀..`);
 });
