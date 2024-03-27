@@ -1,7 +1,5 @@
-// const { log } = require("winston");
-// const logger = require('../utils/logger')
-import { ObjectId } from 'mongoose';
-import BookingSchema from '../models/bookingModel';
+import { ObjectId, QueryOptions, UpdateQuery } from 'mongoose';
+import BookingSchema,{Booking} from '../models/bookingModel';
 
 const viewBookingAll = async ()=> {
   try {
@@ -22,19 +20,16 @@ const viewBookingAll = async ()=> {
   }
 };
 
-// export const viewBookingFilter = async (query:string) => {
-//   try {
-//     return await BookingSchema.find(query)
-//       .sort({ createdAt: -1 })
-//       .populate("customer")
-//       .populate("driver")
-//       .exec();
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const viewBookingFilter = async (query:any) => {
+  try {
+    return await BookingSchema.find(query)
+      .sort({ createdAt: -1 })
+  } catch (error) {
+    throw error;
+  }
+};
 
-const createBooking = async (query:object) => {
+const createBooking = async (query:string) => {
   try {
     return await BookingSchema.create(query);
   } catch (error) {
@@ -44,7 +39,7 @@ const createBooking = async (query:object) => {
 };
 
 
-const updateBooking = async (id:ObjectId, query:any, option:any) => {
+const updateBooking = async (id:string, query:UpdateQuery<Booking>, option:QueryOptions<Booking>) => {
   try {
     return await BookingSchema.findByIdAndUpdate(id, query, option);
   } catch (error) {
@@ -52,63 +47,64 @@ const updateBooking = async (id:ObjectId, query:any, option:any) => {
   }
 };
 
-// exports.cancelBooking = async (query) => {
-//   try {
-//     return await BookingSchema.findByIdAndDelete(query);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
-// exports.rideComplete = async (query) => {
-//   try {
-//     return await BookingSchema.findById(query);
-//   } catch (error) {
-//     logger.error(error);
-//   }
-// };
+export const cancelBooking = async (query:string)=> {
+  try {
+    return await BookingSchema.findByIdAndDelete(query);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// exports.getRevenue = async () => {
-//   try {
-//     const monthlyRevenue = await BookingSchema.aggregate([
-//       {
-//         $group: {
-//           _id: {
-//             year: { $year: "$pickupTime" },
-//             month: { $month: "$pickupTime" },
-//           },
-//           totalRevenue: { $sum: "$fare" },
-//         },
-//       },
-//       {
-//         $sort: { "_id.year": 1, "_id.month": 1 },
-//       },
-//     ]);
-//     return monthlyRevenue;
-//   } catch (error) {
-//     console.log("ERROR in Aggregation " + error);
-//   }
-// };
+export const rideComplete = async (query:string) => {
+  try {
+    return await BookingSchema.findById(query);
+  } catch (error) {
+    console.log(error);    
+  }
+};
 
-// exports.aggregateBookings = async () => {
-//   try {
-//     const result = await BookingSchema.aggregate([
-//       {
-//         $group: {
-//           _id: {
-//             day: { $dayOfMonth: "$createdAt" },
-//             week: { $week: "$createdAt" },
-//             month: { $month: "$createdAt" },
-//             year: { $year: "$createdAt" },
-//           },
-//           totalBookings: { $sum: 1 },
-//         },
-//       },
-//     ]);
-//     return result;
-//   } catch (error) {
-//     console.log("ERROR in Aggregation " + error);
-//   }
-// };
+export const getRevenue = async () => {
+  try {
+    const monthlyRevenue = await BookingSchema.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$pickupTime" },
+            month: { $month: "$pickupTime" },
+          },
+          totalRevenue: { $sum: "$fare" },
+        },
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 },
+      },
+    ]);
+    return monthlyRevenue;
+  } catch (error) {
+    console.log("ERROR in Aggregation " + error);
+  }
+};
 
-export const bookingService =  {createBooking,viewBookingAll,viewBooking,updateBooking}
+export const aggregateBookings = async () => {
+  try {
+    const result = await BookingSchema.aggregate([
+      {
+        $group: {
+          _id: {
+            day: { $dayOfMonth: "$createdAt" },
+            week: { $week: "$createdAt" },
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" },
+          },
+          totalBookings: { $sum: 1 },
+        },
+      },
+    ]);
+    return result;
+  } catch (error) {
+    console.log("ERROR in Aggregation " + error);
+  }
+};
+
+export const bookingService =  {createBooking,viewBookingAll,viewBookingFilter,viewBooking,updateBooking,cancelBooking,rideComplete,getRevenue,aggregateBookings}

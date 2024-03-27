@@ -5,15 +5,16 @@ export interface Booking extends Document {
   driver: mongoose.Schema.Types.ObjectId;
   pickupLocation: string;
   dropoffLocation:string;
-  pickupTime:string;
-  dropoffTime:string;
+  pickupTime:Date;
+  dropoffTime:Date;
   fare: number;
+  rating:number;
   status: string;
   payment_status:string;
   comments:string;
 }
 
-const bookingSchema:Schema = new mongoose.Schema(
+const bookingSchema = new mongoose.Schema<Booking>(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
