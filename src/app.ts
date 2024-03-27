@@ -3,7 +3,6 @@ import connectDB from './configs/dbConnection';
 import indexRoute from './routes/index';
 import {PORT} from './helper/constants';
 import logger from './utils/logger';
-// import logger from './src/utils/logger'
 
 const app = express();
 

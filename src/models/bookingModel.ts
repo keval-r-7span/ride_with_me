@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export interface Booking extends Document {
   customer: mongoose.Schema.Types.ObjectId;
