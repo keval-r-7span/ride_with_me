@@ -47,7 +47,7 @@ const createBooking = async (req:Request, res:Response) => {
   }
 };
 
-const updateBooking = async (req:any, res:any) => {
+const updateBooking = async (req:Request, res:Response) => {
   try {
     const response = await bookingService.updateBooking(
       req.params.id,

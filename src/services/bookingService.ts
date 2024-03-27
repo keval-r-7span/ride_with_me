@@ -1,4 +1,4 @@
-import { ObjectId, QueryOptions, UpdateQuery } from 'mongoose';
+import { QueryOptions, RootQuerySelector, UpdateQuery } from 'mongoose';
 import BookingSchema,{Booking} from '../models/bookingModel';
 
 const viewBookingAll = async ()=> {
@@ -20,7 +20,7 @@ const viewBookingAll = async ()=> {
   }
 };
 
-export const viewBookingFilter = async (query:any) => {
+export const viewBookingFilter = async (query:RootQuerySelector<Booking>) => {
   try {
     return await BookingSchema.find(query)
       .sort({ createdAt: -1 })
