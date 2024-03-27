@@ -1,7 +1,7 @@
-// const transporter = require("../configs/mailTransport");
-// const dateFormate = require('../helper/dateFormatter')
+// // import transporter from '../configs/mailTransport';
+// import dateFormate from'../helper/dateFormatter'
 
-// const mailForBooking = async (_doc) => {
+// const mailForBooking = async (_doc:any) => {
 //   if(_doc.status==='accepted'){
 //     const dateTime = dateFormate(_doc.pickupTime).split(',')
 //    return await transporter.sendMail({
@@ -30,4 +30,4 @@
 //   }
 // };
 
-// module.exports = mailForBooking;
+// export default  mailForBooking;
