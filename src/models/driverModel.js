@@ -27,7 +27,8 @@ const driverSchema = new mongoose.Schema({
   },
   token: {
     type: String,
-  }
+  },
+  
 });
 
 module.exports =  mongoose.model("Driver", driverSchema)
