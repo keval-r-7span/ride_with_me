@@ -1,6 +1,16 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const driverSchema = new mongoose.Schema({
+interface Driver {
+  name: string;
+  email: string; 
+  phoneNumber: string; 
+  availability: 'available' | 'unavailable';
+  password: string;
+  role: 'admin' | 'driver' | 'user'; 
+  token?: string; 
+}
+
+const driverSchema = new mongoose.Schema<Driver>({
   name: {
     type: String
   },
@@ -31,4 +41,4 @@ const driverSchema = new mongoose.Schema({
   
 });
 
-module.exports =  mongoose.model("Driver", driverSchema)
+export default mongoose.model<Driver>('Driver', driverSchema);

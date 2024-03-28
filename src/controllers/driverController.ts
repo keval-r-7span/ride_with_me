@@ -1,10 +1,11 @@
-const driverService = require("../services/driverService");
-const vehicleService = require("../services/vehicleService");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { JWT } = require("../helper/constants");
+import { driverService } from '../services/driverService';
+import { vehicleService } from '../services/vehicleService';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
+import { JWT } from '../helper/constants';
+import { Request, Response , NextFunction} from "express";
 
-exports.signUp = async (req, res) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const { name, email, phoneNumber, vehicleDetails, password, role, token } =
       req.body;
@@ -41,7 +42,7 @@ exports.signUp = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { phoneNumber, password } = req.body;
     if (!phoneNumber || !password) {
@@ -70,12 +71,12 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.updateDriver = async (req, res) => {
+export const updateDriver = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { name, phoneNumber, availability, vehicleDetails } = req.body;
     const response = await driverService.updateDriver(
-      { _id: id },
+      id,
       { name, phoneNumber, availability, vehicleDetails }
     );
     return res.status(200).json({
@@ -91,7 +92,7 @@ exports.updateDriver = async (req, res) => {
   }
 };
 
-exports.deleteDriver = async (req, res) => {
+export const deleteDriver = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const response = await driverService.deleteDriver(id);
@@ -108,7 +109,7 @@ exports.deleteDriver = async (req, res) => {
   }
 };
 
-exports.availableDrivers = async (req, res, next) => {
+export const availableDrivers = async (req:Request, res: Response, next: NextFunction) => {
   try {
     const availableDrivers = await driverService.availableDrivers();
     res.status(200).json({
@@ -124,14 +125,20 @@ exports.availableDrivers = async (req, res, next) => {
   }
 };
 
-exports.addVehicle = async (req, res) => {
+export const addVehicle = async (req: Request, res: Response) => {
   try {
     const { manufacturer, model, year, licensePlate, color, vehicleClass, driverId } = req.body;
     const vehicleExist = await vehicleService.findVehicle({ licensePlate });
     if (vehicleExist) {
       throw new Error("vehicle Already exist with same licensePlate");
     }
-    const response = await vehicleService.addVehicle({ manufacturer, model, year, licensePlate, color, vehicleClass, driverId });
+    const response = await vehicleService.addVehicle({
+      manufacturer, model, year, licensePlate, color, vehicleClass, driverId,
+      fare: 0,
+      save: function (): unknown {
+        throw new Error('Function not implemented.');
+      }
+    });
     await response.save();
     return res.status(200).json({
       success: true,
@@ -146,13 +153,13 @@ exports.addVehicle = async (req, res) => {
   }
 };
 
-exports.updateVehicle = async (req, res) => {
+export const updateVehicle = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { manufacturer, model, year, licensePlate, color, vehicleClass } =
       req.body;
     const response = await vehicleService.updateVehicleDetails(
-      { _id: id },
+      id,
       { manufacturer, model, year, licensePlate, color, vehicleClass }
     );
     return res.status(200).json({

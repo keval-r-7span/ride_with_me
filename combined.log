@@ -1,2 +1,0 @@
-{"level":"error","message":"ERROR CastError: Cast to ObjectId failed for value \"create\" (type string) at path \"_id\" for model \"Booking\""}
-{"level":"error","message":"ERROR ValidationError: pickupTime: Cast to date failed for value \"12pm\" (type string) at path \"pickupTime\""}
