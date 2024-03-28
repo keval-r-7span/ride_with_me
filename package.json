@@ -18,6 +18,7 @@
     "express": "^4.19.1",
     "joi": "^17.12.2",
     "mongoose": "^8.2.2",
+    "pre-commit": "^1.2.2",
     "winston": "^3.13.0"
   },
   "devDependencies": {

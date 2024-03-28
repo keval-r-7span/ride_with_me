@@ -1,4 +1,4 @@
-import express from 'express';
+import express,{Request,Response} from 'express';
 import connectDB from './configs/dbConnection';
 import indexRoute from './routes/index';
 import {PORT} from './helper/constants';
@@ -11,6 +11,9 @@ app.use(express.json());
 // Define routes
 app.use("/api/v1", indexRoute);
 
+app.get("/",(req:Request,res:Response)=>{
+  res.status(200).send("Welcome to RideWithMe API")
+})
 // Connect to MongoDB Atlas .
 connectDB();
 
