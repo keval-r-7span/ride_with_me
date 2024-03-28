@@ -1,18 +1,6 @@
-import  vehicleDetails  from '../models/vehicleDetails'; 
+import  vehicleDetails  from '../models/vehicleDetails';
 
-interface VehicleDetails {
-  save(): unknown;
-  manufacturer: string;
-  model: string;
-  year: number;
-  licensePlate: string;
-  color: string;
-  vehicleClass: 'Bike' | 'Rickshaw' | 'mini' | 'premius' | 'xl';
-  fare: number;
-  driverId: string;
-}
-
-export const findVehicle = async (query: any): Promise<VehicleDetails | null> => { 
+export const findVehicle = async (query: any) => { 
   try {
     return await vehicleDetails.findOne(query);
   } catch (error) {
@@ -20,20 +8,15 @@ export const findVehicle = async (query: any): Promise<VehicleDetails | null> =>
   }
 };
 
-export const addVehicle = async (query: VehicleDetails): Promise<VehicleDetails> => {
+export const addVehicle = async (query: any) => {
   try {
-    const createdVehicle = await vehicleDetails.create(query);
-    return createdVehicle as VehicleDetails;
-    // return await vehicleDetails.create(query);    // for above 2 lines replacement
+    return await vehicleDetails.create(query);
   } catch (error) {
     throw error;
   }
 };
 
-export const updateVehicleDetails = async (
-  id: string,
-  query: Partial<VehicleDetails>
-): Promise<VehicleDetails | null> => {
+export const updateVehicleDetails = async (id: string, query: any) => {
   try {
     return await vehicleDetails.findByIdAndUpdate(id, query);
   } catch (error) {

@@ -1,15 +1,4 @@
-import  driverSchema  from '../models/driverModel'; 
-
-// interface driverSchema {
-//   name: string;
-//   email: string; 
-//   phoneNumber: string; 
-//   availability: 'available' | 'unavailable';
-//   password: string;
-//   role: 'admin' | 'driver' | 'user'; 
-//   token?: string; 
-//   vehicleDetails : string;
-// }
+import  driverSchema  from '../models/driverModel';
 
 export const findDriver = async (query: any) => { 
   try {
@@ -21,17 +10,13 @@ export const findDriver = async (query: any) => {
 
 export const registerUser = async (query: any) => {
   try {
-    const createdDriver = await driverSchema.create(query);
-    return createdDriver;
+    return await driverSchema.create(query);
   } catch (error) {
     throw error;
   }
 };
 
-export const updateDriver = async (
-  id: string,
-  query: any,
-) => {
+export const updateDriver = async (id: string, query: any) => {
   try {
     return await driverSchema.findByIdAndUpdate(id, query);
   } catch (error) {
@@ -47,7 +32,6 @@ export const deleteDriver = async (query: any) => {
   }
 };
 
-// export const availableDrivers = async (): Promise<driverSchema[]> => {
 export const availableDrivers = async () => {
   try {
     return await driverSchema.find({ availability: 'available' }).select('name');

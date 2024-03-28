@@ -14,11 +14,7 @@ import {
 import { validateRequest, validateAddVehicle } from '../validation/driverValidation';
 import { validateUpdateRequest, validateUpdateVehicle } from '../validation/updateValidation';
 
-interface ExtendedRequest extends express.Request {
-  body: { [key: string]: any }; 
-}
-
-router.post('/register', validateRequest, (req: ExtendedRequest, res) => signUp(req, res)); // Example with typed request
+router.post('/register', validateRequest, signUp);
 router.post('/login', login);
 router.put('/update/:id', validateUpdateRequest, updateDriver);
 router.delete('/delete/:id', deleteDriver);

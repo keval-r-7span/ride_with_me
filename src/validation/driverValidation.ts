@@ -1,16 +1,7 @@
 import Joi, { Schema } from "joi";
 import { Request, Response, NextFunction } from "express";
 
-interface Driver {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  availability?: string;
-  password: string;
-  role?: string;
-}
-
-const driverJoiSchema: Schema<Driver> = Joi.object({
+const driverJoiSchema = Joi.object({
   name: Joi.string().min(3).max(30).required(),
   email: Joi.string().email().required(),
   phoneNumber: Joi.string().min(10).max(10).required(),
@@ -28,18 +19,8 @@ const validateRequest = (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-interface Vehicle {
-  manufacturer: string;
-  model: string;
-  year: string;
-  licensePlate: string;
-  color?: string;
-  vehicleClass: string;
-  baseFare: number;
-  driverId: string;
-}
 
-const addVehicleSchema: Schema<Vehicle> = Joi.object({
+const addVehicleSchema = Joi.object({
   manufacturer: Joi.string().required(),
   model: Joi.string().required(),
   year: Joi.string().min(4).max(4).required(),

@@ -1,17 +1,15 @@
 import { driverService } from '../services/driverService';
 import { vehicleService } from '../services/vehicleService';
-import * as bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
-import { JWT } from '../helper/constants';
+import bcrypt from 'bcryptjs';
 import { Request, Response , NextFunction} from "express";
 
 export const signUp = async (req: Request, res: Response) => {
   try {
-    const { name, email, phoneNumber, vehicleDetails, password, role, token } =
+    const { name, email, phoneNumber, vehicleDetails, password, role } =
       req.body;
-    const userExist = await driverService.findDriver({ email });
+    const userExist = await driverService.findDriver({ phoneNumber });
     if (userExist) {
-      throw new Error("User Already exist with same Email");
+      throw new Error("User Already exist with same phoneNumber");
     }
     if (role !== "driver" && role == "") {
       return res.status(400).json({

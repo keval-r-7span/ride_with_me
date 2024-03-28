@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-interface Driver {
+interface driver {
   _id: mongoose.Schema.Types.ObjectId;
 }
 
-interface VehicleDetails {
+interface vehicle {
   manufacturer: string;
   model: string; 
   year: number;
@@ -12,10 +12,10 @@ interface VehicleDetails {
   color: string;
   vehicleClass: 'Bike' | 'Rickshaw' | 'mini' | 'premius' | 'xl';
   fare: number;
-  driverId: Driver | string;
+  driverId: driver | string;
 }
 
-const vehicleDetails = new mongoose.Schema<VehicleDetails>({
+const vehicleDetails = new mongoose.Schema<vehicle>({
   manufacturer: {
     type: String, // Tata, Hyundai, Maruti, Mahindra, Toyota
   },
@@ -44,4 +44,4 @@ const vehicleDetails = new mongoose.Schema<VehicleDetails>({
   }
 });
 
-export default mongoose.model<VehicleDetails>('Vehicle', vehicleDetails);
+export default mongoose.model<vehicle>('Vehicle', vehicleDetails);
