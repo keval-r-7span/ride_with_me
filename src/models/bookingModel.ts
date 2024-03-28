@@ -33,6 +33,7 @@ const bookingSchema = new mongoose.Schema<Booking>(
     vehicleClass: {
       type: String,
       enum: ["Bike", "Rickshaw", "mini", "premius", "xl"],
+      default:'Rickshaw'
     },
     pickupLocation: {
       type: String,
