@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { DB_DATA } = require("../helper/constants");
 require("dotenv").config();
-const logger = require('../utils/indexLogger')
+const logger = require('../utils/logger')
 
 const connectDB = async () => {
   try {

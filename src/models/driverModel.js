@@ -18,6 +18,8 @@ const driverSchema = new mongoose.Schema({
     year: { type: Number },
     licensePlate: { type: String }
   },
+  //bike,auto, car-->hatchback,suv,sedan,vip
+  //stripe-upi_id
   availability: {
     type: String,
     enum: ['available', 'unavailable'],

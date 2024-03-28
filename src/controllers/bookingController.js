@@ -1,5 +1,5 @@
 const { trueResponse, falseResponse } = require("../configs/responseMes");
-const mailForBooking = require("../helper/sendMail");
+const mailForBooking = require("../utils/sendMail");
 const bookingService = require("../services/bookingService");
 const bookingJoiSchema = require("../validation/bookingValidation");
 

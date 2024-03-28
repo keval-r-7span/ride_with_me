@@ -31,5 +31,6 @@ router.post("/user/reset-password-token", resetPasswordToken);
 router.post("/user/reset-password", resetPassword);
 //calc distance
 router.get("/maps/distance", calcDistance);
+//show user profile 
 
 module.exports = router;

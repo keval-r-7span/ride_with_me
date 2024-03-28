@@ -1,8 +1,8 @@
 const customerService = require("../services/userService");
 const bcrypt = require("bcryptjs");
-const jwtToken = require("../validator/jwtToken");
+const jwtToken = require("../validation/jwtToken");
 const { trueResponse, falseResponse, falseResponseError } = require("../configs/responseMes");
-const mailForBooking = require("../helper/sendMail");
+const mailForBooking = require("../utils/sendMail");
 const crypto = require("crypto");
 
 const signUp = async (req, res) => {
@@ -42,7 +42,7 @@ const login = async (req, res) => {
     if (!registeredUser) {
       return falseResponse(res);
     } else {
-      const ismatch = bcrypt.compare(password, registeredUser.password);
+      const ismatch = await bcrypt.compare(password, registeredUser.password);
       if (ismatch) {
         const token = jwtToken.generateAccessToken(registeredUser);
         console.log(registeredUser);

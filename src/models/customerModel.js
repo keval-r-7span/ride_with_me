@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 
 const CustomerSchema = new mongoose.Schema(
   {
@@ -29,6 +29,8 @@ const CustomerSchema = new mongoose.Schema(
     resetPasswordExpires: {
       type: Date,
     },
+    //penalty
+    // profile-->gender,
   },
   { timestamps: true }
 );
