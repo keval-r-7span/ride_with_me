@@ -5,12 +5,12 @@ const viewBooking = async (req:Request, res:Response)=> {
   try {
     const response = await bookingService.viewBookingAll()
     if (!response) {
-     return res.json({sucess:false,data:"NO DATA"})
+     return res.json({sucess:false,data:"No Booking Available"})
     }
     return res.status(200).json({sucess:true,data:response})
   } catch (error) {
     console.log(error);
-    return res.json({sucess:false,data:"ERROR"})
+    return res.json({sucess:false,data:"Error in viewBooking"})
   }
 };
 
@@ -18,7 +18,7 @@ const viewBookingById = async (req:Request, res:Response) => {
   try {
     const response = await bookingService.viewBooking(req.params.id);
     if (!response) {
-      return res.json({sucess:false,data:"NO DATA"})
+      return res.json({sucess:false,data:"No Booking Available"})
     }
     return res.status(200).json({sucess:true,data:response})
   } catch (error) {
@@ -57,9 +57,9 @@ const updateBooking = async (req:Request, res:Response) => {
       { new: true }
     );
     if (!response) {
-      return res.status(200).json({sucess:false,message:"NO DATA CHANGE"});
+      return res.status(200).json({sucess:false,message:"Enter Valid Booking"});
     }
-    return res.status(200).json({sucess:true,data:response,message:"NO DATA CHANGE"});
+    return res.status(200).json({sucess:true,data:response});
   } catch (error) {
     return res.status(200).json({sucess:false,message:error});
   }
@@ -69,7 +69,7 @@ const cancelBooking = async (req:Request, res:Response) => {
   try {
     const response = await bookingService.cancelBooking(req.params.id);
     if (!response) {
-      return res.status(200).json({sucess:false,message:"NO CANCEL ANY BOOKING"});
+      return res.status(200).json({sucess:false,message:"Enter valid Booking"});
     }
     return res.status(200).json({sucess:true,data:response,message:"Booking Cancel Suceesfully."});
   } catch (error) {
@@ -82,7 +82,7 @@ const changeRideStatus = async (req:Request, res:Response) => {
     const { id } = req.params;
     const ridebooking = await bookingService.rideComplete(id);
     if (!ridebooking) {
-      return res.status(200).json({sucess:false,message:"NO CANCEL ANY BOOKING"});
+      return res.status(200).json({sucess:false,message:"Enter Valid Ride"});
     }
     ridebooking.status = "completed";
     await ridebooking.save();
@@ -96,7 +96,7 @@ const paymentStatus = async (req:Request, res:Response) => {
   try {
     const response = await bookingService.rideComplete(req.params.id);
     if (!response) {
-       return res.status(200).json({sucess:false,message:"NO ANY PAYMENT"}); ;
+       return res.status(200).json({sucess:false,message:"Enter Valid Payment Status ID"}); ;
     }
     response.payment_status = "completed";
     await response.save();
